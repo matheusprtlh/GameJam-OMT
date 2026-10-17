@@ -1,0 +1,7 @@
+// Regras locais para cada PC. O Syncthing nao sincroniza este arquivo automaticamente.
+// Compartilhar os arquivos-fonte; cada Godot gera seu proprio cache.
+.godot
+.git
+*.sync-conflict-*
+~syncthing~*
+*.zip

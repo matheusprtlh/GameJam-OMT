@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://bs0o1hsjl06og"]
+
+[ext_resource type="Script" uid="uid://buevjqxnyxksh" path="res://Scripts/UI/menu.gd" id="1_plcv4"]
+[ext_resource type="PackedScene" uid="uid://vqv7bv5ebhkg" path="res://Objetos/UI/fundo_menu.tscn" id="1_u1n12"]
+[ext_resource type="FontFile" uid="uid://cnulhtm6ago02" path="res://Fontes/Cinzel-VariableFont_wght.ttf" id="2_u1n12"]
+[ext_resource type="Script" uid="uid://bnbulof3s2viw" path="res://Cenas/label.gd" id="3_eheat"]
+[ext_resource type="Script" uid="uid://c4rv05cflgxnc" path="res://Cenas/label_2.gd" id="4_fapvr"]
+[ext_resource type="Texture2D" uid="uid://bsb6e8ww58v3e" path="res://Assets/bardivisedown.png" id="5_kdsmm"]
+[ext_resource type="FontFile" uid="uid://c1q4p04d38y7f" path="res://Fontes/Rocketron.otf" id="6_kdsmm"]
+[ext_resource type="Script" uid="uid://peq4201ocl66" path="res://Cenas/button.gd" id="7_8lfl8"]
+[ext_resource type="Script" uid="uid://bl1m5xb6dbkgr" path="res://Cenas/quit.gd" id="9_1evsv"]
+[ext_resource type="AudioStream" uid="uid://bl4e6okr3t6ut" path="res://Sons/Musicas/Menu Song.mp3" id="9_8aipq"]
+
+[node name="Menu" type="Control" unique_id=1976177729]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_plcv4")
+
+[node name="FundoMenu" parent="." unique_id=1515504788 instance=ExtResource("1_u1n12")]
+layout_mode = 1
+
+[node name="Label" type="Label" parent="." unique_id=1471615499]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.48006
+offset_top = -121.0
+offset_right = -27.480072
+offset_bottom = -97.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+theme_override_colors/font_color = Color(0.36333904, 0.99999994, 0.8499842, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_u1n12")
+theme_override_font_sizes/font_size = 17
+text = "TÍTULO 1"
+script = ExtResource("3_eheat")
+
+[node name="Label2" type="Label" parent="." unique_id=1740585817]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.480072
+offset_top = -87.0
+offset_right = 59.519928
+offset_bottom = -51.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3.3199987, 3.3199987)
+pivot_offset = Vector2(61, 0)
+theme_override_colors/font_color = Color(0.36333904, 0.99999994, 0.8499842, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_u1n12")
+theme_override_font_sizes/font_size = 26
+text = "TÍTULO 2"
+script = ExtResource("4_fapvr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1794460310]
+position = Vector2(316, 264)
+texture = ExtResource("5_kdsmm")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=767485848]
+layout_mode = 0
+offset_left = 255.00002
+offset_top = 215.0
+offset_right = 308.75
+offset_bottom = 235.0
+scale = Vector2(2.4, 2.4)
+theme_override_fonts/normal_font = ExtResource("6_kdsmm")
+bbcode_enabled = true
+text = "PLAY"
+scroll_active = false
+
+[node name="Play" type="Button" parent="RichTextLabel" unique_id=380133082]
+layout_mode = 0
+offset_top = 5.0
+offset_right = 53.33332
+offset_bottom = 20.0
+flat = true
+script = ExtResource("7_8lfl8")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="." unique_id=7351492]
+layout_mode = 0
+offset_left = 262.0
+offset_top = 265.0
+offset_right = 315.75
+offset_bottom = 285.0
+scale = Vector2(2.4, 2.4)
+theme_override_fonts/normal_font = ExtResource("6_kdsmm")
+bbcode_enabled = true
+text = "QUIT"
+scroll_active = false
+
+[node name="Quit" type="Button" parent="RichTextLabel2" unique_id=1121708279]
+layout_mode = 0
+offset_top = 5.0
+offset_right = 48.749992
+offset_bottom = 20.0
+flat = true
+script = ExtResource("9_1evsv")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1740633524]
+stream = ExtResource("9_8aipq")
+pitch_scale = 1.66
+autoplay = true
+
+[connection signal="pressed" from="RichTextLabel/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="RichTextLabel2/Quit" to="." method="_on_quit_pressed"]

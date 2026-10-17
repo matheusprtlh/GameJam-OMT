@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwut2m2n2xkv7"]
+
+[ext_resource type="Script" path="res://scene_transition.gd" id="1_script"]
+[ext_resource type="Shader" path="res://pulse.gdshader" id="2_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pulse"]
+shader = ExtResource("2_shader")
+shader_parameter/progress = 0.0
+shader_parameter/pulse = 0.0
+shader_parameter/reference_resolution = Vector2(640, 360)
+
+[node name="SceneTransition" type="CanvasLayer"]
+layer = 100
+script = ExtResource("1_script")
+
+[node name="PulseOverlay" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_pulse")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0

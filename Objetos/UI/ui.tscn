@@ -1,0 +1,212 @@
+[gd_scene format=3 uid="uid://dqxmwyimlxhtl"]
+
+[ext_resource type="Script" uid="uid://bgmr1wwf0cfj4" path="res://Scripts/UI/ui.gd" id="1_tu6mu"]
+[ext_resource type="FontFile" uid="uid://c1q4p04d38y7f" path="res://Fontes/Rocketron.otf" id="2_qltj8"]
+[ext_resource type="Texture2D" uid="uid://cslmq6p8fd4j7" path="res://Assets/UI/Lifebar.png" id="3_qltj8"]
+[ext_resource type="Shader" uid="uid://dhea3d72ec5g7" path="res://Shaders/shaderbutton.gdshader" id="4_xjld8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ebum8"]
+shader = ExtResource("4_xjld8")
+shader_parameter/base_color = Color(0, 0.92995733, 1.8247963, 1)
+shader_parameter/fade_length = 0.4
+shader_parameter/hover_alpha = 0.4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xjld8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bkl0m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ne00o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0el84"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vvong"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a0hms"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_st68l"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rq1ti"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7nr3m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_abjdr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_htcft"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vvong"]
+content_margin_right = 10.0
+
+[node name="UI" type="Control" unique_id=1492345889]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tu6mu")
+
+[node name="TimerLabel" type="Label" parent="." unique_id=1173674057]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 56.0
+offset_bottom = 25.0
+theme_override_fonts/font = ExtResource("2_qltj8")
+text = "00:00"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=42630602]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 350.0
+offset_right = 239.0
+offset_bottom = 364.0
+scale = Vector2(0.5, 0.5)
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer" unique_id=2093673925]
+layout_mode = 2
+texture = ExtResource("3_qltj8")
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer" unique_id=2101660267]
+layout_mode = 2
+texture = ExtResource("3_qltj8")
+
+[node name="TextureRect3" type="TextureRect" parent="HBoxContainer" unique_id=1080010978]
+layout_mode = 2
+texture = ExtResource("3_qltj8")
+
+[node name="TextureRect4" type="TextureRect" parent="HBoxContainer" unique_id=188310115]
+layout_mode = 2
+texture = ExtResource("3_qltj8")
+
+[node name="TextureRect5" type="TextureRect" parent="HBoxContainer" unique_id=1106123949]
+layout_mode = 2
+texture = ExtResource("3_qltj8")
+
+[node name="TextureRect6" type="TextureRect" parent="HBoxContainer" unique_id=115241357]
+layout_mode = 2
+texture = ExtResource("3_qltj8")
+
+[node name="TextureRect7" type="TextureRect" parent="HBoxContainer" unique_id=1202593447]
+layout_mode = 2
+texture = ExtResource("3_qltj8")
+
+[node name="TextureRect8" type="TextureRect" parent="HBoxContainer" unique_id=1824279363]
+layout_mode = 2
+texture = ExtResource("3_qltj8")
+
+[node name="TextureRect9" type="TextureRect" parent="HBoxContainer" unique_id=1199641517]
+layout_mode = 2
+texture = ExtResource("3_qltj8")
+
+[node name="Button" type="Button" parent="." unique_id=1845485236]
+visible = false
+material = SubResource("ShaderMaterial_ebum8")
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 80.0
+offset_top = -32.5
+offset_right = 410.0
+offset_bottom = 32.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_qltj8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xjld8")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_bkl0m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ne00o")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_0el84")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vvong")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_a0hms")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_st68l")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_rq1ti")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_7nr3m")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_abjdr")
+theme_override_styles/focus = SubResource("StyleBoxFlat_htcft")
+
+[node name="Label" type="Label" parent="Button" unique_id=1347845201]
+layout_mode = 0
+offset_right = 323.0
+offset_bottom = 67.5
+theme_override_fonts/font = ExtResource("2_qltj8")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vvong")
+text = "CURA"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Button2" type="Button" parent="." unique_id=398185007]
+visible = false
+material = SubResource("ShaderMaterial_ebum8")
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 80.0
+offset_top = -132.5
+offset_right = 410.0
+offset_bottom = -67.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_qltj8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xjld8")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_bkl0m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ne00o")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_0el84")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vvong")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_a0hms")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_st68l")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_rq1ti")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_7nr3m")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_abjdr")
+theme_override_styles/focus = SubResource("StyleBoxFlat_htcft")
+
+[node name="Label" type="Label" parent="Button2" unique_id=253622604]
+layout_mode = 0
+offset_right = 323.0
+offset_bottom = 67.5
+theme_override_fonts/font = ExtResource("2_qltj8")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vvong")
+text = "CURA"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Button3" type="Button" parent="." unique_id=2135350571]
+visible = false
+material = SubResource("ShaderMaterial_ebum8")
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 80.0
+offset_top = 67.5
+offset_right = 410.0
+offset_bottom = 132.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_qltj8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xjld8")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_bkl0m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ne00o")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_0el84")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vvong")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_a0hms")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_st68l")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_rq1ti")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_7nr3m")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_abjdr")
+theme_override_styles/focus = SubResource("StyleBoxFlat_htcft")
+
+[node name="Label" type="Label" parent="Button3" unique_id=1434962134]
+layout_mode = 0
+offset_right = 323.0
+offset_bottom = 67.5
+theme_override_fonts/font = ExtResource("2_qltj8")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vvong")
+text = "CURA"
+horizontal_alignment = 2
+vertical_alignment = 1

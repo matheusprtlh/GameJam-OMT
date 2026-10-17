@@ -1,0 +1,12 @@
+# Cache local do Godot
+.godot/
+/android/
+
+# Metadados locais e conflitos de sincronizacao
+.stfolder/
+*.sync-conflict-*
+~syncthing~*
+*.tmp
+
+# Backups compactados devem ficar fora do projeto ativo
+*.zip

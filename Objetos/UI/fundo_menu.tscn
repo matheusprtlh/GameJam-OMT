@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://vqv7bv5ebhkg"]
+
+[ext_resource type="Shader" uid="uid://bx4b26fbyflkv" path="res://Shaders/shadermenu.gdshader" id="1_7ujae"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ebum8"]
+shader = ExtResource("1_7ujae")
+shader_parameter/background_color = Color(0.012, 0.025, 0.065, 1)
+shader_parameter/cyan_color = Color(0.12, 1, 0.78, 1)
+shader_parameter/purple_color = Color(0.65, 0.35, 1, 1)
+shader_parameter/anomaly_color = Color(1, 0.12, 0.55, 1)
+shader_parameter/particle_amount = 100.0
+shader_parameter/particle_density = 5.0
+shader_parameter/speed = 2.98999993316752
+shader_parameter/glow_strength = 5.0
+shader_parameter/pixel_size = 2.0
+shader_parameter/fade_speed = 2.1499999519432
+shader_parameter/minimum_brightness = 0.999999977648
+shader_parameter/initial_brightness = 0.85
+shader_parameter/pulse_speed = 0.22999999485904
+shader_parameter/pulse_strength = 0.999999977648
+shader_parameter/pulse_scale = 3.10000004619372
+shader_parameter/anomaly_strength = 0.0
+shader_parameter/reference_resolution = Vector2(1280, 720)
+shader_parameter/enable_rays = true
+shader_parameter/ray_amount = 12
+shader_parameter/ray_intensity = 0.3
+shader_parameter/ray_width = 0.08
+shader_parameter/ray_speed = 0.08
+shader_parameter/ray_angle = 0.3
+shader_parameter/ray_pixel_size = 6.0
+shader_parameter/ray_color = Color(0.05, 0.55, 1, 1)
+
+[node name="FundoMenu" type="ColorRect" unique_id=1515504788]
+material = SubResource("ShaderMaterial_ebum8")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
