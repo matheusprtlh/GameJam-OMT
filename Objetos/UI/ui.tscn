@@ -97,6 +97,10 @@ texture = ExtResource("3_qltj8")
 layout_mode = 2
 texture = ExtResource("3_qltj8")
 
+[node name="TextureRect10" type="TextureRect" parent="HBoxContainer" unique_id=1594251826]
+layout_mode = 2
+texture = ExtResource("3_qltj8")
+
 [node name="Button" type="Button" parent="." unique_id=1845485236]
 visible = false
 material = SubResource("ShaderMaterial_ebum8")

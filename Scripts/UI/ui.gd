@@ -12,6 +12,7 @@ const OPACIDADE_PADRAO: float = 0.4
 const OPACIDADE_HOVER: float = 1.0
 
 func _ready() -> void:
+	Global.New_Health.connect()
 	var botoes: Array[Button] = [button, button_2, button_3]
 	
 	for btn in botoes:
