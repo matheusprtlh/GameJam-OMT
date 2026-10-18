@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://y1q5xd53v8a7"]
 
-[ext_resource type="Script" uid="uid://oaphgoh2xkpx" path="res://Scripts/UI/game_over.gd" id="1_28vn7"]
+[ext_resource type="Script" uid="uid://b64sevuelatpo" path="res://Scripts/UI/game_over.gd" id="1_28vn7"]
 [ext_resource type="Shader" uid="uid://bjqtd7m12uf3f" path="res://Shaders/gameover.gdshader" id="1_y26ei"]
 [ext_resource type="FontFile" uid="uid://cnulhtm6ago02" path="res://Fontes/Cinzel-VariableFont_wght.ttf" id="2_yxx3c"]
 [ext_resource type="FontFile" uid="uid://c1q4p04d38y7f" path="res://Fontes/Rocketron.otf" id="4_k2vha"]

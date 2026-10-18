@@ -44,6 +44,10 @@ func _ready() -> void:
 	camera_fixa.zoom = Vector2.ONE
 	camera_fixa.make_current()
 
+	var fade := create_tween()
+	fade.tween_property($FadeBranco/ColorRect, "color:a", 0.0, 1.0)
+	fade.tween_callback($FadeBranco.queue_free)
+
 func _process(delta: float) -> void:
 	if get_tree().paused:
 		return
