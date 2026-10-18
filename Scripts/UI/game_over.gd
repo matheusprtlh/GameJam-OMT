@@ -1,6 +1,9 @@
 extends Control
 
 func _on_retry_pressed() -> void:
+	if SceneTransition.transitioning:
+		return
+	Global.prepare_retry()
 	SceneTransition.change_scene("res://Cenas/Jogo.tscn")
 
 func _on_menu_pressed() -> void:
