@@ -85,6 +85,8 @@ shader = ExtResource("4_xjld8")
 shader_parameter/base_color = Color(0, 0.92995733, 1.8247963, 1)
 shader_parameter/fade_length = 0.4
 shader_parameter/hover_alpha = 0.4
+shader_parameter/modo_cromatico = 0.0
+shader_parameter/tempo_cromatico = 0.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xjld8"]
 

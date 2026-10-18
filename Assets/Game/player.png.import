@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://byobw4amk1ufm"
-path="res://.godot/imported/Talking Main Character.png-2ce6be9486afc58f430d2bda288ae8b0.ctex"
+uid="uid://c60mctb1vki81"
+path="res://.godot/imported/player.png-03f26f4cc1cd6359fe23a60da4c1b27a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Talking Main Character.png"
-dest_files=["res://.godot/imported/Talking Main Character.png-2ce6be9486afc58f430d2bda288ae8b0.ctex"]
+source_file="res://Assets/Game/player.png"
+dest_files=["res://.godot/imported/player.png-03f26f4cc1cd6359fe23a60da4c1b27a.ctex"]
 
 [params]
 

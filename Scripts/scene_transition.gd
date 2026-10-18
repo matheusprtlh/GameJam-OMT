@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 @onready var overlay: ColorRect = $PulseOverlay
+@onready var audio: AudioStreamPlayer = $AudioStreamPlayer
 
 var transitioning := false
 
@@ -16,6 +17,9 @@ func change_scene(scene_path: String) -> void:
 
 	transitioning = true
 	overlay.visible = true
+
+	await get_tree().create_timer(0.5).timeout
+	audio.play()
 
 	var material := overlay.material as ShaderMaterial
 

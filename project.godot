@@ -105,7 +105,5 @@ textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 textures/vram_compression/import_etc2_astc=true
 viewport/hdr_2d=true
-# Android: renderer leve para caber em celulares de 6GB (RAM unificada).
-# Desktop continua Forward+/D3D12; o glow neon pode nao aparecer no celular.
-renderer/rendering_method.mobile="gl_compatibility"
+#Android:rendererleveparacaberemcelularesde6GB(RAMunificada).#DesktopcontinuaForward+/D3D12renderer/rendering_method.mobile="gl_compatibility"
 viewport/hdr_2d.mobile=false

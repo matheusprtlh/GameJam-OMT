@@ -5,7 +5,7 @@ extends Node
 const DESTINO := "res://Tests/captura_heart.png"
 
 func _ready() -> void:
-	var sala = load("res://sala_heart.tscn").instantiate()
+	var sala = load("res://Cenas/sala_heart.tscn").instantiate()
 	add_child(sala)
 	await get_tree().create_timer(0.6).timeout
 	var img: Image = get_viewport().get_texture().get_image()
