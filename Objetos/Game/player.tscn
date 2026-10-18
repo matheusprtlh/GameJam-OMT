@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b258wnh3m4iyx" path="res://Scripts/Game/player.gd" id="1_aikfs"]
 [ext_resource type="Texture2D" uid="uid://c60mctb1vki81" path="res://Assets/Game/player.png" id="2_403gk"]
 [ext_resource type="Texture2D" uid="uid://dfikr263q82q6" path="res://Assets/Game/laterna.png" id="3_403gk"]
+[ext_resource type="AudioStream" path="res://Sons/Efeitos/attack.mp3" id="4_ataque_som"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ebum8"]
 size = Vector2(128, 128)
@@ -92,6 +93,9 @@ scale = Vector2(0.3, 0.3)
 collision_layer = 2
 platform_on_leave = 2
 script = ExtResource("1_aikfs")
+
+[node name="SomAtaque" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ataque_som")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1250559487]
 shape = SubResource("RectangleShape2D_ebum8")

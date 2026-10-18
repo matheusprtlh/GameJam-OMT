@@ -318,6 +318,10 @@ func _input(event: InputEvent) -> void:
 	if attack_cooldown_remaining > 0.0:
 		return
 
+	# O golpe sempre produz som, mesmo quando não encontra um alvo.
+	attack_cooldown_remaining = ATTACK_COOLDOWN
+	$SomAtaque.play()
+
 	var area_ataque: Area2D = $Area2D
 
 	for area: Area2D in area_ataque.get_overlapping_areas():

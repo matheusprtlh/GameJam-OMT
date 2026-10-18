@@ -31,16 +31,21 @@ func _process(_delta: float) -> void:
 		return
 
 	if is_instance_valid(player):
-		if player.global_position.y > chunk_size_in_pixels.y + fall_margin and not SceneTransition.transitioning:
-			Global.Health = 0
-			return
+		# A saída deve ser processada ANTES do limite de queda: depois de
+		# atravessar o mapa o personagem pode estar sem chão.
+		if player.global_position.x >= (640 * grid_width) and Global.levelup == 0 and not SceneTransition.transitioning:
+			Global.levelup = 1
+			$CanvasLayer/UI.power()
+
+		# Depois da conclusão, a queda fora da fase não causa game over.
+		if Global.levelup == 0 and not SceneTransition.transitioning:
+			if player.global_position.y > chunk_size_in_pixels.y + fall_margin:
+				Global.Health = 0
+				return
 
 		$Parallax/GPUParticles2D2.global_position.x = player.global_position.x
 		$Parallax/GPUParticles2D.global_position.x = player.global_position.x
 
-		if player.global_position.x >= (640 * grid_width) and Global.levelup == 0 and not SceneTransition.transitioning:
-			$CanvasLayer/UI.power()
-			Global.levelup = 1
 
 func generate_map() -> void:
 	if chunk_scenes.is_empty():

@@ -101,6 +101,8 @@ func explodir_coracao() -> void:
 	if coracao_derrotado:
 		return
 	coracao_derrotado = true
+	# O sinal coracao_morreu ocorre quando o visual desaparece.
+	$SomExplosaoHeart.play()
 	$StaticBody2D2/CollisionShape2D2.set_deferred("disabled", true)
 
 	print("EXPLOSÃO FINAL DO CORAÇÃO!")

@@ -1,6 +1,7 @@
 extends Control
 
 @onready var timer_label: Label = $TimerLabel
+@onready var round_label: Label = $RoundLabel
 @onready var button: Button = $Button
 @onready var button_2: Button = $Button2
 @onready var button_3: Button = $Button3
@@ -96,6 +97,7 @@ func _ready() -> void:
 	add_to_group("hud_upgrade")
 
 	passoudefase_inicial = Global.passoudefase
+	atualizar_round()
 
 	if Global.New_Health.is_connected(update_life):
 		Global.New_Health.disconnect(update_life)
@@ -114,6 +116,11 @@ func _ready() -> void:
 		$TouchScreenButton2.queue_free()
 		$TouchScreenButton3.queue_free()
 		$VirtualJoystick.queue_free()
+
+# Cada vitoria concluida libera a proxima rodada.
+# A sala Heart entra como ROUND 06 apos cinco vitorias.
+func atualizar_round() -> void:
+	round_label.text = "ROUND %02d" % (Global.vitorias + 1)
 
 func fase_ja_concluida() -> bool:
 	return Global.passoudefase > passoudefase_inicial
@@ -211,7 +218,7 @@ func update_life(valor: int) -> void:
 			return
 
 		transicao_morte_iniciada = true
-		SceneTransition.change_scene("res://Cenas/game_over.tscn")
+		SceneTransition.change_scene("res://Cenas/game_over.tscn", true)
 		return
 
 	var coracoes = container_coracoes.get_children()

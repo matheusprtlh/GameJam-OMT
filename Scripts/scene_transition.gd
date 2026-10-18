@@ -5,10 +5,27 @@ extends CanvasLayer
 
 var transitioning := false
 
+const CORES_AZUIS := {
+	"core_color": Color(0.25, 0.72, 1.0, 1.0),
+	"bright_blue": Color(0.05, 0.45, 1.0, 1.0),
+	"deep_blue": Color(0.01, 0.1, 0.32, 1.0)
+}
+const CORES_MORTE := {
+	"core_color": Color(1.0, 0.30, 0.32, 1.0),
+	"bright_blue": Color(0.92, 0.08, 0.12, 1.0),
+	"deep_blue": Color(0.32, 0.015, 0.04, 1.0)
+}
+
+func configurar_cores(morte: bool) -> void:
+	var material := overlay.material as ShaderMaterial
+	var cores := CORES_MORTE if morte else CORES_AZUIS
+	for parametro in cores:
+		material.set_shader_parameter(parametro, cores[parametro])
+
 func _ready() -> void:
 	overlay.visible = false
 
-func change_scene(scene_path: String) -> void:
+func change_scene(scene_path: String, morte: bool = false) -> void:
 	if transitioning:
 		return
 	if not ResourceLoader.exists(scene_path, "PackedScene"):
@@ -16,6 +33,7 @@ func change_scene(scene_path: String) -> void:
 		return
 
 	transitioning = true
+	configurar_cores(morte)
 	overlay.visible = true
 
 	await get_tree().create_timer(0.5).timeout
@@ -51,6 +69,7 @@ func change_scene(scene_path: String) -> void:
 	if error != OK:
 		push_error("Erro ao trocar cena: " + scene_path)
 		overlay.visible = false
+		configurar_cores(false)
 		transitioning = false
 		return
 
@@ -69,6 +88,7 @@ func change_scene(scene_path: String) -> void:
 	await reveal.finished
 
 	overlay.visible = false
+	configurar_cores(false)
 	transitioning = false
 
 func set_pulse(value: float) -> void:

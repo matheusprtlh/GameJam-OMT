@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://b1kmyawuhqddg" path="res://Objetos/Game/enemy.tscn" id="24_ra4bg"]
 [ext_resource type="PackedScene" uid="uid://cebotw7p02tl7" path="res://Objetos/Game/enemy_2.tscn" id="25_ruwg5"]
 [ext_resource type="PackedScene" uid="uid://dqxmwyimlxhtl" path="res://Objetos/UI/ui.tscn" id="26_heart_ui"]
+[ext_resource type="AudioStream" path="res://Sons/Efeitos/transitionN.mp3" id="27_heart_som"]
 
 [sub_resource type="Gradient" id="Gradient_jluxk"]
 colors = PackedColorArray(0, 18.892157, 18.892157, 0.367, 1, 1, 1, 0)
@@ -208,6 +209,9 @@ texture = ExtResource("10_celth")
 [node name="Player" parent="." unique_id=815027710 instance=ExtResource("11_m55wo")]
 position = Vector2(1351, 154)
 void_y = 400.0
+
+[node name="SomExplosaoHeart" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("27_heart_som")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=103654509]
 
