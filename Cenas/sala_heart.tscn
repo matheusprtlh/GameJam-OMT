@@ -25,6 +25,7 @@
 [ext_resource type="Script" uid="uid://dp5uuv5tiv473" path="res://Scripts/Heart/heart.gd" id="22_ay2qq"]
 [ext_resource type="PackedScene" uid="uid://b1kmyawuhqddg" path="res://Objetos/Game/enemy.tscn" id="24_ra4bg"]
 [ext_resource type="PackedScene" uid="uid://cebotw7p02tl7" path="res://Objetos/Game/enemy_2.tscn" id="25_ruwg5"]
+[ext_resource type="PackedScene" uid="uid://dqxmwyimlxhtl" path="res://Objetos/UI/ui.tscn" id="26_heart_ui"]
 
 [sub_resource type="Gradient" id="Gradient_jluxk"]
 colors = PackedColorArray(0, 18.892157, 18.892157, 0.367, 1, 1, 1, 0)
@@ -219,6 +220,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="UI" parent="CanvasLayer" instance=ExtResource("26_heart_ui")]
+
 [node name="Pause2" type="Control" parent="CanvasLayer" unique_id=67777340]
 process_mode = 3
 visible = false
@@ -402,3 +405,4 @@ color = Color(1, 1, 1, 1)
 
 [connection signal="pressed" from="CanvasLayer/Pause2/RichTextLabel/Resume" to="CanvasLayer/Pause2" method="_on_resume_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause2/RichTextLabel2/Menu" to="CanvasLayer/Pause2" method="_on_menu_pressed"]
+
