@@ -34,10 +34,6 @@ const OPCOES_UPGRADE: Array[Dictionary] = [
 var upgrades_atuais: Dictionary = {}
 
 func _ready() -> void:
-	# Garante que a variável MaxHealth exista no Global
-	if not ("MaxHealth" in Global):
-		Global.set("MaxHealth", VIDA_BASE_MAXIMA)
-	
 	# Desconecta para evitar conexões duplicadas ao recarregar fases
 	if Global.New_Health.is_connected(update_life):
 		Global.New_Health.disconnect(update_life)
@@ -114,14 +110,12 @@ func update_life(valor: int) -> void:
 			return
 		transicao_morte_iniciada = true
 		SceneTransition.change_scene("res://Cenas/game_over.tscn")
-		Global.Health = VIDA_BASE_MAXIMA
-		Global.MaxHealth = VIDA_BASE_MAXIMA
 		return
 	
 	var coracoes = container_coracoes.get_children()
-	var max_health_atual: int = Global.MaxHealth if ("MaxHealth" in Global) else VIDA_BASE_MAXIMA
+	var max_health_atual: int = Global.MaxH
 	
-	# Cria corações extras caso o MaxHealth seja maior do que os nós existentes
+	# Cria corações extras caso o limite seja maior do que os nós existentes
 	if max_health_atual > coracoes.size() and coracoes.size() > 0:
 		var modelo_coracao = coracoes[0]
 		for k in range(coracoes.size(), max_health_atual):
@@ -196,13 +190,12 @@ func aplicar_upgrade(btn: Button) -> void:
 		return
 		
 	var upgrade = upgrades_atuais[btn]
-	var teto_maximo: int = Global.MaxH if ("MaxHealth" in Global) else VIDA_BASE_MAXIMA
+	var teto_maximo: int = Global.MaxH
 	
 	match upgrade["id"]:
 		"curar":
-			# Cura até no máximo o teto disponível (MaxHealth)
+			# O setter emite a vida efetivamente armazenada uma única vez.
 			Global.Health = min(Global.Health + 3, teto_maximo)
-			Global.New_Health.emit(Global.Health)
 			
 		"mais_vida":
 			# Aumenta APENAS o teto máximo, sem dar vida
@@ -214,8 +207,7 @@ func aplicar_upgrade(btn: Button) -> void:
 				Global.Damage += 2
 				
 		"velocidade":
-			if "Speed" in Global:
-				Global.Speed += 20.0
+			Global.Speed *= 1.1
 
 func _on_button_pressed() -> void:
 	if Global.levelup != 1 or SceneTransition.transitioning or transicao_morte_iniciada:

@@ -6,6 +6,8 @@ extends Node2D
 @onready var player: CharacterBody2D = $Player
 @onready var chunks_container: Node2D = $ChunksContainer
 @export var enemy_scenes: Array[PackedScene] = []
+# Margem abaixo da área do mapa antes de considerar uma queda fatal.
+@export var fall_margin: float = 200.0
 
 # Instância isolada do gerador de números aleatórios
 var rng := RandomNumberGenerator.new()
@@ -13,6 +15,7 @@ var rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
 	get_tree().paused = false
+	Global.levelup = 0
 	
 	# Se não houver seed salva no Global (ou se for 0), gera uma nova seed
 	if Global.current_seed == 0:
@@ -30,6 +33,10 @@ func _process(_delta: float) -> void:
 		return
 
 	if is_instance_valid(player):
+		if player.global_position.y > chunk_size_in_pixels.y + fall_margin and not SceneTransition.transitioning:
+			Global.Health = 0
+			return
+
 		$Parallax/GPUParticles2D2.global_position.x = player.global_position.x
 		$Parallax/GPUParticles2D.global_position.x = player.global_position.x
 
@@ -103,6 +110,7 @@ func _spawn_enemy_at_marker(marker: Node2D) -> void:
 # Reinicia a fase mantendo a mesma seed guardada no Global
 func restart_scene() -> void:
 	if not SceneTransition.transitioning:
+		Global.prepare_retry()
 		SceneTransition.change_scene(scene_file_path)
 
 
