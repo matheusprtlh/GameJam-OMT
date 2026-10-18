@@ -64,6 +64,22 @@ region = Rect2(544, 239, 16, 14)
 atlas = ExtResource("5_vvong")
 region = Rect2(561, 239, 15, 14)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvaim"]
+atlas = ExtResource("5_vvong")
+region = Rect2(290, 120, 15, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cp0si"]
+atlas = ExtResource("5_vvong")
+region = Rect2(306, 120, 15, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gs36p"]
+atlas = ExtResource("5_vvong")
+region = Rect2(290, 256, 15, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5nqg7"]
+atlas = ExtResource("5_vvong")
+region = Rect2(306, 256, 15, 14)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ebum8"]
 shader = ExtResource("4_xjld8")
 shader_parameter/base_color = Color(0, 0.92995733, 1.8247963, 1)
@@ -400,6 +416,70 @@ grow_horizontal = 0
 grow_vertical = 0
 scale = Vector2(0.5, 0.5)
 texture = SubResource("AtlasTexture_2icyy")
+
+[node name="TextureRect15" type="TextureRect" parent="." unique_id=1837299589]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -158.0
+offset_top = -64.0
+offset_right = -118.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_kvaim")
+
+[node name="TextureRect16" type="TextureRect" parent="." unique_id=510505399]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -138.0
+offset_top = -64.0
+offset_right = -98.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_cp0si")
+
+[node name="TextureRect17" type="TextureRect" parent="." unique_id=639298234]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -158.0
+offset_top = -64.0
+offset_right = -118.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_gs36p")
+
+[node name="TextureRect18" type="TextureRect" parent="." unique_id=742718097]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -138.0
+offset_top = -64.0
+offset_right = -98.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_5nqg7")
 
 [node name="Button" type="Button" parent="." unique_id=1845485236]
 material = SubResource("ShaderMaterial_ebum8")

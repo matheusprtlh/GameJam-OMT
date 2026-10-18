@@ -152,6 +152,8 @@ func _process(delta: float) -> void:
 	$TextureRect6.visible = !Input.is_action_pressed("ui_left")
 	$TextureRect7.visible = !Input.is_action_pressed("ui_down")
 	$TextureRect8.visible = !Input.is_action_pressed("ui_right")
+	$TextureRect17.visible = !Input.is_action_pressed("Dash")
+	$TextureRect18.visible = !Input.is_action_pressed("Dash")
 
 	var accept_solto = !Input.is_action_pressed("ui_accept")
 
