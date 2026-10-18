@@ -190,13 +190,7 @@ func update_life(valor: int) -> void:
 			return
 
 		transicao_morte_iniciada = true
-
-		SceneTransition.change_scene(
-			"res://Cenas/game_over.tscn"
-		)
-
-		Global.MaxH = Global.VIDA_BASE_MAXIMA
-		Global.Health = Global.VIDA_BASE_MAXIMA
+		SceneTransition.change_scene("res://Cenas/game_over.tscn")
 		return
 
 	var coracoes = container_coracoes.get_children()
@@ -408,9 +402,7 @@ func aplicar_upgrade(btn: Button) -> void:
 				Global.Damage += valor
 
 		"velocidade":
-			if "Speed" in Global:
-				# mantém a proporção do código antigo: 10% exibido = 20 de Speed
-				Global.Speed += valor * 2.0
+			Global.Speed *= 1.0 + float(valor) / 100.0
 
 func _on_button_pressed() -> void:
 	if Global.levelup != 1 or SceneTransition.transitioning or transicao_morte_iniciada:

@@ -10,4 +10,8 @@ func _on_quit_pressed() -> void:
 	get_tree().quit()
 
 func _on_play_pressed() -> void:
+	if SceneTransition.transitioning:
+		return
+	if Global.Health <= 0:
+		Global.prepare_retry()
 	SceneTransition.change_scene("res://Cenas/cutscene_historia.tscn")

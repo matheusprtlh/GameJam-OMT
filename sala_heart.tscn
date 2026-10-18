@@ -385,5 +385,17 @@ scale = Vector2(0.29869062, 0.29869062)
 position = Vector2(1507, 233)
 scale = Vector2(0.46934533, 0.46934533)
 
+[node name="FadeBranco" type="CanvasLayer" parent="."]
+layer = 101
+
+[node name="ColorRect" type="ColorRect" parent="FadeBranco"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 1)
+
 [connection signal="pressed" from="CanvasLayer/Pause2/RichTextLabel/Resume" to="CanvasLayer/Pause2" method="_on_resume_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause2/RichTextLabel2/Menu" to="CanvasLayer/Pause2" method="_on_menu_pressed"]

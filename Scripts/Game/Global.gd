@@ -7,7 +7,7 @@ signal New_Health(valor)
 signal New_Level(valor)
 signal comecar(valor)
 
-# vida extra persiste entre fases; morte reinicia vida e limite.
+# Vida extra persiste entre fases e tentativas.
 const VIDA_BASE_MAXIMA: int = 10
 
 # declare maxh antes de health: o setter depende dessa ordem.
@@ -26,7 +26,7 @@ var comecou =  false:
 		comecou = valor
 		comecar.emit(valor)
 var current_seed = 0
-var Speed = 300
+var Speed: float = 300.0
 var Damage = 1
 var passoudefase: int
 var sombras = 0
@@ -43,3 +43,9 @@ func song(valor):
 		
 		audio_player.play()
 		
+
+
+# Uma nova tentativa mantém o mapa e as melhorias já conquistadas.
+func prepare_retry() -> void:
+	levelup = 0
+	Health = MaxH
