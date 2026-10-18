@@ -2,7 +2,7 @@
 extends CharacterBody2D
 
 @onready var camera: Camera2D = $Camera2D
-@onready var sprite: Node2D = get_node_or_null("Sprite2D")
+@onready var sprite: Node2D = get_node_or_null("AnimatedSprite2D")
 
 var alvo: CharacterBody2D = null
 
@@ -126,12 +126,15 @@ func _physics_process(delta: float) -> void:
 
 		if direction:
 			velocity.x = direction * Global.Speed
+			$AnimatedSprite2D.play("Walk")
+			$AnimatedSprite2D.flip_h = direction < 0
 		else:
 			velocity.x = move_toward(
 				velocity.x,
 				0,
 				Global.Speed
 			)
+			$AnimatedSprite2D.play("default")
 
 	move_and_slide()
 

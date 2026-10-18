@@ -13,7 +13,6 @@ func _ready() -> void:
 	get_tree().paused = false
 	if Global.comecou == false:
 		Global.comecou = true
-
 	# a seed salva permite repetir a mesma fase.
 	if Global.current_seed == 0:
 		rng.randomize()

@@ -23,8 +23,9 @@ const COR_CIANO: Color = Color(0.0, 1.0, 1.0, 1.0)
 const COR_CIANO_DESATIVADO: Color = Color(0.18, 0.35, 0.42, 0.6)
 
 # ==================== RARIDADES ====================
-# peso          -> chance relativa de ser sorteado (60/25/12/3 = 60%, 25%, 12%, 3%)
-# multiplicador -> multiplica o valor base do upgrade
+# peso            -> chance relativa de ser sorteado
+# multiplicador   -> multiplica o valor base do upgrade
+# unlock_vitorias -> só entra no sorteio com esse mínimo de Global.vitorias (0 = sempre)
 const RARIDADE_NORMAL: Dictionary = {
 	"nome": "NORMAL",
 	"cor": Color(0.0, 0.5, 1.0, 1.0),
@@ -53,11 +54,23 @@ const RARIDADE_LENDARIO: Dictionary = {
 	"multiplicador": 4
 }
 
+# ULTRA LENDÁRIO: degradê cromático animado no shader
+# a "cor" aqui é ignorada (o shader usa o arco-íris quando modo_cromatico = 1.0)
+const RARIDADE_ULTRA_LENDARIO: Dictionary = {
+	"nome": "ULTRA LENDÁRIO",
+	"cor": Color(1.0, 1.0, 1.0, 1.0),
+	"peso": 1,
+	"multiplicador": 6,
+	"unlock_vitorias": 5,
+	"cromatico": true
+}
+
 const LISTA_RARIDADES: Array[Dictionary] = [
 	RARIDADE_NORMAL,
 	RARIDADE_RARO,
 	RARIDADE_EPICO,
-	RARIDADE_LENDARIO
+	RARIDADE_LENDARIO,
+	RARIDADE_ULTRA_LENDARIO
 ]
 
 # %d é trocado pelo valor final | %% vira o caractere %
@@ -71,7 +84,17 @@ const OPCOES_UPGRADE: Array[Dictionary] = [
 var upgrades_atuais: Dictionary = {}
 var tweens_pulso: Dictionary = {}
 
+# ULTRA LENDÁRIO: contador de sorteios forçados + ajustes
+var ultra_forcado_restante: int = 0
+
+const VITORIAS_PARA_ULTRA: int = 5
+const DURACAO_CICLO_CROMATICO: float = 2.0
+
 func _ready() -> void:
+	# permite chamar forcar_ultra_lendarios() de qualquer script:
+	# get_tree().call_group("hud_upgrade", "forcar_ultra_lendarios")
+	add_to_group("hud_upgrade")
+
 	passoudefase_inicial = Global.passoudefase
 
 	if Global.New_Health.is_connected(update_life):
@@ -152,8 +175,6 @@ func _process(delta: float) -> void:
 	$TextureRect6.visible = !Input.is_action_pressed("ui_left")
 	$TextureRect7.visible = !Input.is_action_pressed("ui_down")
 	$TextureRect8.visible = !Input.is_action_pressed("ui_right")
-	$TextureRect17.visible = !Input.is_action_pressed("Dash")
-	$TextureRect18.visible = !Input.is_action_pressed("Dash")
 
 	var accept_solto = !Input.is_action_pressed("ui_accept")
 
@@ -235,16 +256,28 @@ func update_life(valor: int) -> void:
 			)
 
 # ==================== SORTEIO DE RARIDADE ====================
+# A Ultra Lendária pode ser FORÇADA (independe das vitórias):
+# chame forcar_ultra_lendarios() para as próximas opções serem ultra
 func sortear_raridade() -> Dictionary:
+	if ultra_forcado_restante > 0:
+		ultra_forcado_restante -= 1
+		return RARIDADE_ULTRA_LENDARIO
+
 	var peso_total: int = 0
 
 	for raridade in LISTA_RARIDADES:
+		if _raridade_bloqueada(raridade):
+			continue
+
 		peso_total += raridade["peso"]
 
 	var rolagem: int = randi_range(1, peso_total)
 	var acumulado: int = 0
 
 	for raridade in LISTA_RARIDADES:
+		if _raridade_bloqueada(raridade):
+			continue
+
 		acumulado += raridade["peso"]
 
 		if rolagem <= acumulado:
@@ -252,13 +285,32 @@ func sortear_raridade() -> Dictionary:
 
 	return LISTA_RARIDADES[0]
 
-# Aplica a cor da raridade no shader do botão
-# ÉPICO e LENDÁRIO ainda ganham brilho pulsante
+func _raridade_bloqueada(raridade: Dictionary) -> bool:
+	if raridade.get("unlock_vitorias", 0) <= 0:
+		return false
+
+	return not ultra_lendario_liberado()
+
+func ultra_lendario_liberado() -> bool:
+	if not ("vitorias" in Global):
+		return false
+
+	return Global.vitorias >= VITORIAS_PARA_ULTRA
+
+## Força as próximas 'quantidade' opções sorteadas a serem ULTRA LENDÁRIAS.
+## Ex.: forcar_ultra_lendarios()     -> a próxima tela inteira (3 botões) será ultra
+##      forcar_ultra_lendarios(1)    -> só 1 botão ultra na próxima tela
+func forcar_ultra_lendarios(quantidade: int = 3) -> void:
+	ultra_forcado_restante = quantidade
+
+# Aplica o visual da raridade no shader do botão
+# - ÉPICO e LENDÁRIO: brilho pulsante
+# - ULTRA LENDÁRIO: degradê cromático animado
 func aplicar_raridade_visual(btn: Button, raridade: Dictionary) -> void:
 	if not (btn.material is ShaderMaterial):
 		return
 
-	# para o pulso anterior, se existir
+	# para a animação anterior, se existir
 	if tweens_pulso.has(btn):
 		var tween_antigo: Tween = tweens_pulso[btn]
 
@@ -267,7 +319,27 @@ func aplicar_raridade_visual(btn: Button, raridade: Dictionary) -> void:
 
 		tweens_pulso.erase(btn)
 
+	# garante que o botão saia do modo cromático por padrão
+	btn.material.set_shader_parameter("modo_cromatico", 0.0)
+
 	var cor: Color = raridade["cor"]
+
+	# ULTRA LENDÁRIO: liga o degradê cromático animado
+	if raridade.get("cromatico", false):
+		btn.material.set_shader_parameter("modo_cromatico", 1.0)
+
+		# 0 -> 1 = um ciclo completo do arco-íris (loop perfeito, sem "pulo")
+		var tween: Tween = create_tween().set_loops()
+		tween.tween_method(
+			_definir_tempo_cromatico.bind(btn),
+			0.0,
+			1.0,
+			DURACAO_CICLO_CROMATICO
+		)
+
+		tweens_pulso[btn] = tween
+		return
+
 	btn.material.set_shader_parameter("base_color", cor)
 
 	# só ÉPICO (3x) e LENDÁRIO (4x) brilham
@@ -288,6 +360,10 @@ func _pulso_cor(t: float, btn: Button, cor_a: Color, cor_b: Color) -> void:
 			"base_color",
 			cor_a.lerp(cor_b, t)
 		)
+
+func _definir_tempo_cromatico(t: float, btn: Button) -> void:
+	if btn.material is ShaderMaterial:
+		btn.material.set_shader_parameter("tempo_cromatico", t)
 
 func obter_label_filho(btn: Button) -> Label:
 	for child in btn.get_children():

@@ -31,6 +31,7 @@ var Damage = 1
 var passoudefase: int
 var sombras = 0
 var vitorias: int = 0
+var contador: int = 0
 
 func song(valor):
 	if valor == true:
