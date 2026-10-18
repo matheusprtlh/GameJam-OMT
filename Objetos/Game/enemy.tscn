@@ -1,8 +1,23 @@
 [gd_scene format=3 uid="uid://b1kmyawuhqddg"]
 
-[ext_resource type="Texture2D" uid="uid://c75jrp57x4wfs" path="res://icon.svg" id="1_gqjoo"]
 [ext_resource type="Script" uid="uid://4udr3f6kalon" path="res://Scripts/Game/enemy.gd" id="1_trivi"]
+[ext_resource type="Texture2D" uid="uid://drabtiqmrapk5" path="res://Assets/Cogumelo.png" id="2_d47rt"]
 [ext_resource type="FontFile" uid="uid://c1q4p04d38y7f" path="res://Fontes/Rocketron.otf" id="3_d47rt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_edyow"]
+atlas = ExtResource("2_d47rt")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ebum8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_edyow")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ebum8"]
 size = Vector2(128, 128)
@@ -47,6 +62,8 @@ _data = {
 &"RESET": SubResource("Animation_qwg3q")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_svhir"]
+
 [node name="Enemy" type="CharacterBody2D" unique_id=1048024087 groups=["Enemy"]]
 scale = Vector2(0.5, 0.5)
 collision_layer = 4
@@ -54,14 +71,16 @@ platform_on_leave = 2
 script = ExtResource("1_trivi")
 push_force = 200.0
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=541659915]
-modulate = Color(1, 0, 0, 1)
-texture = ExtResource("1_gqjoo")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1856943044]
+scale = Vector2(4.019001, 4.019001)
+sprite_frames = SubResource("SpriteFrames_ebum8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1191265732]
 shape = SubResource("RectangleShape2D_ebum8")
 
 [node name="Push" type="Area2D" parent="." unique_id=1105048611]
+collision_layer = 7
+collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Push" unique_id=149929182]
 position = Vector2(0, 2)
@@ -80,3 +99,14 @@ horizontal_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Label" unique_id=360676711]
 libraries/ = SubResource("AnimationLibrary_6pqvk")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1821094304]
+scale = Vector2(1.399998, 1.399998)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1351502333]
+scale = Vector2(26.759998, 26.759998)
+shape = SubResource("CircleShape2D_svhir")
+
+[connection signal="body_entered" from="Push" to="." method="_on_push_body_entered"]

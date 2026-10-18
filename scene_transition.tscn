@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bwut2m2n2xkv7"]
+[gd_scene format=3 uid="uid://bxmiiahngucb8"]
 
 [ext_resource type="Script" path="res://scene_transition.gd" id="1_script"]
 [ext_resource type="Shader" path="res://pulse.gdshader" id="2_shader"]

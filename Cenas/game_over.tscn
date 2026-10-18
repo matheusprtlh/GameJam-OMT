@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://y1q5xd53v8a7"]
+
+[ext_resource type="Script" uid="uid://oaphgoh2xkpx" path="res://Scripts/UI/game_over.gd" id="1_28vn7"]
+[ext_resource type="Shader" uid="uid://bjqtd7m12uf3f" path="res://Shaders/gameover.gdshader" id="1_y26ei"]
+[ext_resource type="FontFile" uid="uid://cnulhtm6ago02" path="res://Fontes/Cinzel-VariableFont_wght.ttf" id="2_yxx3c"]
+[ext_resource type="FontFile" uid="uid://c1q4p04d38y7f" path="res://Fontes/Rocketron.otf" id="4_k2vha"]
+[ext_resource type="Script" uid="uid://0x6xwremc48r" path="res://Scripts/UI/retry.gd" id="5_fkf4o"]
+[ext_resource type="Script" uid="uid://dfpyvtklcspaf" path="res://Scripts/UI/menubutton.gd" id="6_3u7xm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xvf33"]
+shader = ExtResource("1_y26ei")
+shader_parameter/azul_sombra = Color(0.005, 0.045, 0.14, 1)
+shader_parameter/azul_musculo = Color(0.025, 0.24, 0.6, 1)
+shader_parameter/azul_luz = Color(0.13, 0.6, 0.96, 1)
+shader_parameter/azul_veias = Color(0.01, 0.09, 0.28, 1)
+shader_parameter/tamanho = 1.0
+shader_parameter/resolucao_pixel = 240.0
+shader_parameter/velocidade_batimento = 1.2
+shader_parameter/forca_batimento = 0.03200000152
+shader_parameter/cor_nevoa = Color(0.6309097, 0.66144633, 0.66556454, 1)
+shader_parameter/opacidade_nevoa = 0.082000003895
+shader_parameter/velocidade_nevoa = 0.18
+shader_parameter/densidade_nevoa = 1.09600004880012
+
+[node name="GameOver" type="Control" unique_id=213295301]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_28vn7")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1901697100]
+material = SubResource("ShaderMaterial_xvf33")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label2" type="Label" parent="." unique_id=1139904666]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -119.0
+offset_top = -155.0
+offset_right = 38.0
+offset_bottom = -118.99999
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3.3199987, 3.3199987)
+pivot_offset = Vector2(61, 0)
+theme_override_colors/font_color = Color(0.9649324, 0.037560903, 5.7756904e-07, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_yxx3c")
+theme_override_font_sizes/font_size = 26
+text = "GAME OVER"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1956525154]
+layout_mode = 0
+offset_left = 238.00002
+offset_top = 158.0
+offset_right = 307.16666
+offset_bottom = 178.0
+scale = Vector2(2.4, 2.4)
+theme_override_fonts/normal_font = ExtResource("4_k2vha")
+bbcode_enabled = true
+text = "RETRY"
+scroll_active = false
+
+[node name="Retry" type="Button" parent="RichTextLabel" unique_id=670758608]
+layout_mode = 0
+offset_top = 5.0
+offset_right = 53.33332
+offset_bottom = 20.0
+flat = true
+script = ExtResource("5_fkf4o")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="." unique_id=1240720255]
+layout_mode = 0
+offset_left = 251.00002
+offset_top = 205.0
+offset_right = 336.0
+offset_bottom = 225.0
+scale = Vector2(2.4, 2.4)
+theme_override_fonts/normal_font = ExtResource("4_k2vha")
+bbcode_enabled = true
+text = "MENU"
+scroll_active = false
+
+[node name="Menu" type="Button" parent="RichTextLabel2" unique_id=343605190]
+layout_mode = 0
+offset_top = 5.0
+offset_right = 84.16666
+offset_bottom = 20.0
+flat = true
+script = ExtResource("6_3u7xm")
+
+[connection signal="pressed" from="RichTextLabel/Retry" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="RichTextLabel2/Menu" to="." method="_on_menu_pressed"]

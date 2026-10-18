@@ -14,4 +14,6 @@ func _on_quit_pressed() -> void:
 
 
 func _on_play_pressed() -> void:
-	SceneTransition.change_scene("res://Cenas/Jogo.tscn")
+	SceneTransition.change_scene("res://Cenas/cutscene_historia.tscn")
+	
+	

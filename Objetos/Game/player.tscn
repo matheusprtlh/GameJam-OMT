@@ -6,14 +6,14 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ebum8"]
 size = Vector2(128, 128)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_d47rt"]
-size = Vector2(256, 20)
+[sub_resource type="CircleShape2D" id="CircleShape2D_rk8jn"]
+radius = 200.0
 
 [sub_resource type="Gradient" id="Gradient_ebum8"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[node name="Player" type="CharacterBody2D" unique_id=815027710]
-scale = Vector2(0.5, 0.5)
+[node name="Player" type="CharacterBody2D" unique_id=815027710 groups=["Player"]]
+scale = Vector2(0.3, 0.3)
 collision_layer = 2
 platform_on_leave = 2
 script = ExtResource("1_aikfs")
@@ -25,14 +25,17 @@ texture = ExtResource("2_403gk")
 shape = SubResource("RectangleShape2D_ebum8")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=785504126]
+limit_left = 0
+limit_right = 3200
 position_smoothing_enabled = true
 
 [node name="Area2D" type="Area2D" parent="." unique_id=2104650949]
 collision_layer = 7
 collision_mask = 7
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1443313550]
-shape = SubResource("RectangleShape2D_d47rt")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1443313550 groups=["Player"]]
+position = Vector2(0, -7.947286e-07)
+shape = SubResource("CircleShape2D_rk8jn")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1196212718]
 position = Vector2(0, 64)

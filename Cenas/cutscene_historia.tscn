@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://b4cp7ycrppo4j"]
+
+[ext_resource type="Script" uid="uid://bijw2uvhvjgra" path="res://Scripts/Cutscene/cutscene_historia.gd" id="1_ol50m"]
+[ext_resource type="Shader" uid="uid://dhea3d72ec5g7" path="res://Shaders/shaderbutton.gdshader" id="2_2w6pi"]
+[ext_resource type="Texture2D" uid="uid://dhmg83t3rtsta" path="res://Assets/Cutscene/TelaFundo.png" id="2_4edwm"]
+[ext_resource type="Texture2D" uid="uid://ta804e04oaif" path="res://Assets/Cutscene/Talking Main Character.png" id="3_j7rl8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4edwm"]
+shader = ExtResource("2_2w6pi")
+shader_parameter/base_color = Color(0, 0.5, 1, 1)
+shader_parameter/fade_length = 0.4
+shader_parameter/hover_alpha = 0.4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ebum8"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.011764706, 0.09019608, 0.16078432, 0.5294118)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pitag"]
+atlas = ExtResource("3_j7rl8")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iknfo"]
+atlas = ExtResource("3_j7rl8")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ebum8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pitag")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iknfo")
+}],
+"loop": 1,
+"name": &"talk",
+"speed": 5.0
+}]
+
+[node name="CutsceneHistoria" type="Control" unique_id=214255113]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ol50m")
+
+[node name="Fundo" type="TextureRect" parent="." unique_id=1949522262]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_4edwm")
+expand_mode = 1
+
+[node name="CaixaTexto" type="PanelContainer" parent="." unique_id=498873452]
+material = SubResource("ShaderMaterial_4edwm")
+layout_mode = 0
+offset_left = 58.0
+offset_top = 198.0
+offset_right = 583.0
+offset_bottom = 308.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ebum8")
+
+[node name="TextoHistoria" type="RichTextLabel" parent="CaixaTexto" unique_id=1569536870]
+layout_mode = 2
+bbcode_enabled = true
+scroll_active = false
+autowrap_mode = 2
+
+[node name="IndicadorProximo" type="Label" parent="." unique_id=661715413]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -154.0
+offset_bottom = 23.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 12
+text = "[ Espaço ] para continuar..."
+
+[node name="Personagem" type="AnimatedSprite2D" parent="." unique_id=1244068046]
+position = Vector2(46, 253.99997)
+scale = Vector2(1.6875, 1.9375)
+sprite_frames = SubResource("SpriteFrames_ebum8")
+animation = &"talk"
+autoplay = "talk"
+frame_progress = 0.004397569

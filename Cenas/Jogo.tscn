@@ -1,21 +1,33 @@
-[gd_scene format=4 uid="uid://byboon1pmpea8"]
+[gd_scene format=3 uid="uid://byboon1pmpea8"]
 
 [ext_resource type="Texture2D" uid="uid://bq1vxdfae5vfm" path="res://Assets/Parallax/Layer_0010_1.png" id="1_8s6qw"]
-[ext_resource type="PackedScene" uid="uid://cxga8vat0jqg7" path="res://Objetos/TileSets/tile1.tscn" id="1_cu2wc"]
 [ext_resource type="Script" uid="uid://cklsjp1mjimrw" path="res://Scripts/Game/jogo.gd" id="1_llca2"]
 [ext_resource type="PackedScene" uid="uid://djpthnr124hrl" path="res://Objetos/Game/player.tscn" id="2_irv42"]
 [ext_resource type="Texture2D" uid="uid://dbdnsxffum85u" path="res://Assets/Parallax/Layer_0009_2.png" id="2_jluxk"]
+[ext_resource type="PackedScene" uid="uid://3vpqkc633s1c" path="res://Chunks/chunk1-1.tscn" id="2_nlxp7"]
+[ext_resource type="PackedScene" uid="uid://bg48evdu33q5" path="res://Chunks/chunk1-2.tscn" id="3_g4kj3"]
 [ext_resource type="Texture2D" uid="uid://v0f7l8erqo28" path="res://Assets/Parallax/Layer_0008_3.png" id="3_v2w3s"]
 [ext_resource type="Texture2D" uid="uid://chnbfgismby6y" path="res://Assets/Parallax/Layer_0006_4.png" id="4_llca2"]
+[ext_resource type="PackedScene" uid="uid://b06og3c8e73bf" path="res://Chunks/chunk1-3.tscn" id="4_rk8jn"]
 [ext_resource type="Texture2D" uid="uid://dye5pdr6w645g" path="res://Assets/Parallax/Layer_0005_5.png" id="5_ip0tw"]
+[ext_resource type="PackedScene" uid="uid://dska1b0mk2md1" path="res://Chunks/chunk1-4.tscn" id="5_to7s4"]
+[ext_resource type="PackedScene" uid="uid://cs5touh1p8lq4" path="res://Chunks/chunk1-5.tscn" id="6_cb73q"]
 [ext_resource type="Texture2D" uid="uid://l2ugbcwomr8d" path="res://Assets/Parallax/Layer_0003_6.png" id="6_nlxp7"]
+[ext_resource type="PackedScene" uid="uid://bkfupja1ky6g6" path="res://Chunks/chunk1-6.tscn" id="7_4wtgg"]
 [ext_resource type="Texture2D" uid="uid://d08elmjvojoj6" path="res://Assets/Parallax/Layer_0002_7.png" id="7_g4kj3"]
 [ext_resource type="Texture2D" uid="uid://beqn1s4s4gbt3" path="res://Assets/Parallax/Layer_0001_8.png" id="8_3m8v0"]
 [ext_resource type="Texture2D" uid="uid://d3ar8fhm5jrg2" path="res://Assets/Parallax/Layer_0000_9.png" id="9_nkcmr"]
 [ext_resource type="PackedScene" uid="uid://dqxmwyimlxhtl" path="res://Objetos/UI/ui.tscn" id="13_jluxk"]
-[ext_resource type="Shader" uid="uid://dj7w6huohvobc" path="res://Cenas/shaderfloresta.gdshader" id="14_llca2"]
 [ext_resource type="PackedScene" uid="uid://b1kmyawuhqddg" path="res://Objetos/Game/enemy.tscn" id="14_v2w3s"]
 [ext_resource type="PackedScene" uid="uid://bmm1a5288eoqn" path="res://Objetos/Game/arbusto.tscn" id="16_ip0tw"]
+[ext_resource type="Script" uid="uid://byx270fiqwjs4" path="res://pause.gd" id="18_rk8jn"]
+[ext_resource type="FontFile" uid="uid://cnulhtm6ago02" path="res://Fontes/Cinzel-VariableFont_wght.ttf" id="19_sg4pm"]
+[ext_resource type="Script" uid="uid://c4rv05cflgxnc" path="res://Cenas/label_2.gd" id="20_to7s4"]
+[ext_resource type="FontFile" uid="uid://c1q4p04d38y7f" path="res://Fontes/Rocketron.otf" id="21_cb73q"]
+[ext_resource type="Script" uid="uid://bl3jyay7yo5ld" path="res://resume.gd" id="22_4wtgg"]
+[ext_resource type="Script" uid="uid://dfpyvtklcspaf" path="res://menubutton.gd" id="23_2xg7b"]
+[ext_resource type="Script" uid="uid://dub6b0r8mtyeg" path="res://options.gd" id="24_kvaim"]
+[ext_resource type="Shader" uid="uid://bqjb6kyri7yup" path="res://Shaders/vinheta.gdshader" id="24_sg4pm"]
 
 [sub_resource type="Gradient" id="Gradient_jluxk"]
 colors = PackedColorArray(0, 18.892157, 18.892157, 0.367, 1, 1, 1, 0)
@@ -34,16 +46,13 @@ scale_max = 3.0
 color = Color(0.9607843, 0.9607843, 0.9607843, 1)
 color_ramp = SubResource("GradientTexture1D_kdsmm")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xvf33"]
-shader = ExtResource("14_llca2")
-shader_parameter/darkness = 0.12
-shader_parameter/atmosphere_color = Color(0.1, 0.16, 0.27, 1)
-shader_parameter/atmosphere_strength = 0.1
-shader_parameter/firefly_color = Color(0.55, 1, 0.85, 1)
-shader_parameter/firefly_intensity = 0.75
-shader_parameter/firefly_density = 8.0
-shader_parameter/firefly_size = 0.003
-shader_parameter/firefly_speed = 0.25
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ebum8"]
+shader = ExtResource("24_sg4pm")
+shader_parameter/shadow_color = Color(0, 0, 0, 1)
+shader_parameter/outer_radius = 1.5000000712500001
+shader_parameter/inner_radius = 0.3
+shader_parameter/softness = 0.5
+shader_parameter/horizontal_only = false
 
 [sub_resource type="Environment" id="Environment_ebum8"]
 background_mode = 3
@@ -51,8 +60,15 @@ glow_enabled = true
 glow_intensity = 1.0
 glow_blend_mode = 0
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ebum8"]
+normal = Vector2(1, 0)
+
 [node name="Node2D" type="Node2D" unique_id=536883192]
 script = ExtResource("1_llca2")
+chunk_scenes = Array[PackedScene]([ExtResource("2_nlxp7"), ExtResource("3_g4kj3"), ExtResource("4_rk8jn"), ExtResource("5_to7s4"), ExtResource("6_cb73q"), ExtResource("7_4wtgg")])
+grid_width = 1
+chunk_size_in_pixels = Vector2(640, 360)
+enemy_scenes = Array[PackedScene]([ExtResource("14_v2w3s")])
 
 [node name="Parallax" type="Node2D" parent="." unique_id=1852060636]
 
@@ -151,9 +167,7 @@ repeat_times = 3
 visible = false
 texture = ExtResource("9_nkcmr")
 
-[node name="TileMapLayer" parent="." unique_id=765324555 instance=ExtResource("1_cu2wc")]
-position = Vector2(-149, -125)
-tile_map_data = PackedByteArray("AAABABEAAAABAAAAAAACABEAAAABAAAAAAADABEAAAABAAAAAAAEABEAAAABAAAAAAAFABEAAAABAAAAAAAGABEAAAABAAAAAAAHABEAAAABAAAAAAAIABEAAAABAAAAAAAJABEAAAABAAAAAAAKABEAAAABAAAAAAALABEAAAABAAAAAAAMABEAAAABAAAAAAANABEAAAABAAAAAAAOABEAAAABAAAAAAAPABEAAAABAAAAAAAQABEAAAABAAAAAAARABEAAAABAAAAAAASABEAAAABAAAAAAATABEAAAABAAAAAAAUABEAAAABAAAAAAAVABEAAAABAAAAAAAWABEAAAABAAAAAAAXABEAAAABAAAAAAAYABEAAAABAAAAAAAZABEAAAABAAAAAAAaABEAAAABAAAAAAAbABEAAAABAAAAAAAcABEAAAABAAAAAAAdABEAAAABAAAAAAAeABEAAAABAAAAAAAfABEAAAABAAAAAAAgABEAAAABAAAAAAAhABEAAAABAAAAAAAiABEAAAABAAAAAAAjABEAAAABAAAAAAAkABEAAAABAAAAAAAlABEAAAABAAAAAAABABIAAAABAAEAAAABABMAAAABAAEAAAABABQAAAABAAEAAAACABIAAAABAAEAAAACABMAAAABAAEAAAACABQAAAABAAEAAAADABIAAAABAAEAAAADABMAAAABAAEAAAADABQAAAABAAEAAAAEABIAAAABAAEAAAAEABMAAAABAAEAAAAEABQAAAABAAEAAAAFABIAAAABAAEAAAAFABMAAAABAAEAAAAFABQAAAABAAEAAAAGABIAAAABAAEAAAAGABMAAAABAAEAAAAGABQAAAABAAEAAAAHABIAAAABAAEAAAAHABMAAAABAAEAAAAHABQAAAABAAEAAAAIABIAAAABAAEAAAAIABMAAAABAAEAAAAIABQAAAABAAEAAAAJABIAAAABAAEAAAAJABMAAAABAAEAAAAJABQAAAABAAEAAAAKABIAAAABAAEAAAAKABMAAAABAAEAAAAKABQAAAABAAEAAAALABIAAAABAAEAAAALABMAAAABAAEAAAALABQAAAABAAEAAAAMABIAAAABAAEAAAAMABMAAAABAAEAAAAMABQAAAABAAEAAAANABIAAAABAAEAAAANABMAAAABAAEAAAANABQAAAABAAEAAAAOABIAAAABAAEAAAAOABMAAAABAAEAAAAOABQAAAABAAEAAAAPABIAAAABAAEAAAAPABMAAAABAAEAAAAPABQAAAABAAEAAAAQABIAAAABAAEAAAAQABMAAAABAAEAAAAQABQAAAABAAEAAAARABIAAAABAAEAAAARABMAAAABAAEAAAARABQAAAABAAEAAAASABIAAAABAAEAAAASABMAAAABAAEAAAASABQAAAABAAEAAAATABIAAAABAAEAAAATABMAAAABAAEAAAATABQAAAABAAEAAAAUABIAAAABAAEAAAAUABMAAAABAAEAAAAUABQAAAABAAEAAAAVABIAAAABAAEAAAAVABMAAAABAAEAAAAVABQAAAABAAEAAAAWABIAAAABAAEAAAAWABMAAAABAAEAAAAWABQAAAABAAEAAAAXABIAAAABAAEAAAAXABMAAAABAAEAAAAXABQAAAABAAEAAAAYABIAAAABAAEAAAAYABMAAAABAAEAAAAYABQAAAABAAEAAAAZABIAAAABAAEAAAAZABMAAAABAAEAAAAZABQAAAABAAEAAAAaABIAAAABAAEAAAAaABMAAAABAAEAAAAaABQAAAABAAEAAAAbABIAAAABAAEAAAAbABMAAAABAAEAAAAbABQAAAABAAEAAAAcABIAAAABAAEAAAAcABMAAAABAAEAAAAcABQAAAABAAEAAAAdABIAAAABAAEAAAAdABMAAAABAAEAAAAdABQAAAABAAEAAAAeABIAAAABAAEAAAAeABMAAAABAAEAAAAeABQAAAABAAEAAAAfABIAAAABAAEAAAAfABMAAAABAAEAAAAfABQAAAABAAEAAAAgABIAAAABAAEAAAAgABMAAAABAAEAAAAgABQAAAABAAEAAAAhABIAAAABAAEAAAAhABMAAAABAAEAAAAhABQAAAABAAEAAAAiABIAAAABAAEAAAAiABMAAAABAAEAAAAiABQAAAABAAEAAAAjABIAAAABAAEAAAAjABMAAAABAAEAAAAjABQAAAABAAEAAAAkABIAAAABAAEAAAAkABMAAAABAAEAAAAkABQAAAABAAEAAAAlABIAAAABAAEAAAAlABMAAAABAAEAAAAlABQAAAABAAEAAAAmABEAAAABAAAAAAAnABEAAAABAAAAAAAoABEAAAABAAAAAAApABEAAAABAAAAAAAqABEAAAABAAAAAAArABEAAAABAAAAAAAsABEAAAABAAAAAAAtABEAAAABAAAAAAAmABIAAAABAAEAAAAnABIAAAABAAEAAAAoABIAAAABAAEAAAApABIAAAABAAEAAAAqABIAAAABAAEAAAArABIAAAABAAEAAAAsABIAAAABAAEAAAAtABIAAAABAAEAAAAuABEAAAABAAAAAAAuABIAAAABAAEAAAAvABEAAAABAAAAAAAvABIAAAABAAEAAAAwABEAAAABAAAAAAAwABIAAAABAAEAAAAxABEAAAABAAAAAAAxABIAAAABAAEAAAAyABEAAAABAAAAAAAyABIAAAABAAEAAAAzABEAAAABAAAAAAAzABIAAAABAAEAAAA0ABEAAAABAAAAAAA0ABIAAAABAAEAAAAmABMAAAABAAEAAAAmABQAAAABAAEAAAAnABMAAAABAAEAAAAnABQAAAABAAEAAAAoABMAAAABAAEAAAAoABQAAAABAAEAAAApABMAAAABAAEAAAApABQAAAABAAEAAAAqABMAAAABAAEAAAAqABQAAAABAAEAAAArABMAAAABAAEAAAArABQAAAABAAEAAAAsABMAAAABAAEAAAAsABQAAAABAAEAAAAtABMAAAABAAEAAAAtABQAAAABAAEAAAAuABMAAAABAAEAAAAuABQAAAABAAEAAAAvABMAAAABAAEAAAAvABQAAAABAAEAAAAwABMAAAABAAEAAAAwABQAAAABAAEAAAAxABMAAAABAAEAAAAxABQAAAABAAEAAAAyABMAAAABAAEAAAAyABQAAAABAAEAAAA=")
+[node name="ChunksContainer" type="Node2D" parent="." unique_id=968036780]
 
 [node name="Player" parent="." unique_id=815027710 instance=ExtResource("2_irv42")]
 position = Vector2(170, 49)
@@ -161,20 +175,125 @@ position = Vector2(170, 49)
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=103654509]
 
 [node name="UI" parent="CanvasLayer" unique_id=1492345889 instance=ExtResource("13_jluxk")]
+z_index = 1
 
-[node name="Enemy" parent="." unique_id=1048024087 instance=ExtResource("14_v2w3s")]
-position = Vector2(580, 192)
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=107973091]
+material = SubResource("ShaderMaterial_ebum8")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=453333870]
-visible = false
-material = SubResource("ShaderMaterial_xvf33")
-offset_left = -718.0
-offset_top = -835.0
-offset_right = 1722.0
-offset_bottom = 903.0
+[node name="Pause2" type="Control" parent="CanvasLayer" unique_id=67777340]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("18_rk8jn")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Pause2" unique_id=1695417094]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label2" type="Label" parent="CanvasLayer/Pause2" unique_id=2025517223]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -348.0
+offset_top = 29.0
+offset_right = -247.24097
+offset_bottom = 65.0
+grow_horizontal = 0
+scale = Vector2(3.3199987, 3.3199987)
+pivot_offset = Vector2(61, 0)
+theme_override_colors/font_color = Color(0.36333904, 0.99999994, 0.8499842, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("19_sg4pm")
+theme_override_font_sizes/font_size = 26
+text = "PAUSED"
+script = ExtResource("20_to7s4")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Pause2" unique_id=1848433910]
+layout_mode = 0
+offset_left = 213.00002
+offset_top = 142.0
+offset_right = 298.0
+offset_bottom = 162.0
+scale = Vector2(2.4, 2.4)
+theme_override_fonts/normal_font = ExtResource("21_cb73q")
+bbcode_enabled = true
+text = "RESUME"
+scroll_active = false
+
+[node name="Resume" type="Button" parent="CanvasLayer/Pause2/RichTextLabel" unique_id=729565322]
+layout_mode = 0
+offset_top = 5.0
+offset_right = 84.16666
+offset_bottom = 20.0
+flat = true
+script = ExtResource("22_4wtgg")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer/Pause2" unique_id=1034491543]
+layout_mode = 0
+offset_left = 213.00002
+offset_top = 191.0
+offset_right = 298.0
+offset_bottom = 211.0
+scale = Vector2(2.4, 2.4)
+theme_override_fonts/normal_font = ExtResource("21_cb73q")
+bbcode_enabled = true
+text = "MENU"
+scroll_active = false
+
+[node name="Menu" type="Button" parent="CanvasLayer/Pause2/RichTextLabel2" unique_id=1440823510]
+layout_mode = 0
+offset_top = 5.0
+offset_right = 84.16666
+offset_bottom = 20.0
+flat = true
+script = ExtResource("23_2xg7b")
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="CanvasLayer/Pause2" unique_id=207127073]
+layout_mode = 0
+offset_left = 213.00002
+offset_top = 240.0
+offset_right = 298.0
+offset_bottom = 260.0
+scale = Vector2(2.4, 2.4)
+theme_override_fonts/normal_font = ExtResource("21_cb73q")
+bbcode_enabled = true
+text = "OPTIONS"
+scroll_active = false
+
+[node name="Options" type="Button" parent="CanvasLayer/Pause2/RichTextLabel3" unique_id=109487249]
+layout_mode = 0
+offset_top = 5.0
+offset_right = 84.16666
+offset_bottom = 20.0
+flat = true
+script = ExtResource("24_kvaim")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1578292149]
 environment = SubResource("Environment_ebum8")
 
 [node name="AnimatedSprite2D" parent="." unique_id=883017061 instance=ExtResource("16_ip0tw")]
 position = Vector2(133, 271)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2027018087]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=283462058]
+shape = SubResource("WorldBoundaryShape2D_ebum8")
+
+[connection signal="pressed" from="CanvasLayer/Pause2/RichTextLabel/Resume" to="CanvasLayer/Pause2" method="_on_resume_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause2/RichTextLabel2/Menu" to="CanvasLayer/Pause2" method="_on_menu_pressed"]
