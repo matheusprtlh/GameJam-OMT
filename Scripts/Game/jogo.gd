@@ -16,7 +16,6 @@ func _ready() -> void:
 	Global.levelup = 0
 	if Global.comecou == false:
 		Global.comecou = true
-
 	# a seed salva permite repetir a mesma fase.
 	if Global.current_seed == 0:
 		rng.randomize()

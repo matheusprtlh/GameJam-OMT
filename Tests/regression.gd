@@ -1,7 +1,7 @@
 extends Node
 
 # Execute após importar o projeto:
-# godot --headless --path . res://tests/regression.tscn
+# godot --headless --path . res://Tests/regression.tscn
 var failures: int = 0
 var checks: int = 0
 var game: Node
