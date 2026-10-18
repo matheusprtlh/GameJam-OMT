@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://cslmq6p8fd4j7" path="res://Assets/UI/Lifebar.png" id="3_qltj8"]
 [ext_resource type="Shader" uid="uid://dhea3d72ec5g7" path="res://Shaders/shaderbutton.gdshader" id="4_xjld8"]
 [ext_resource type="Texture2D" uid="uid://byqggk4yeenin" path="res://Assets/UI/tilemap.png" id="5_vvong"]
+[ext_resource type="AudioStream" uid="uid://wengwp0a5le6" path="res://Sons/Efeitos/collect.mp3" id="6_0el84"]
+[ext_resource type="Texture2D" uid="uid://c75jrp57x4wfs" path="res://icon.svg" id="7_ne00o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ebum8"]
 atlas = ExtResource("5_vvong")
@@ -92,6 +94,24 @@ shader_parameter/hover_alpha = 0.4
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vvong"]
 content_margin_right = 10.0
+
+[sub_resource type="Gradient" id="Gradient_0el84"]
+offsets = PackedFloat32Array(0, 0.6885246, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_uiv75"]
+gradient = SubResource("Gradient_0el84")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_svhir"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 32.5, 1)
+angular_velocity_min = -1.6093254e-05
+angular_velocity_max = 363.86996
+gravity = Vector3(-98, 0, 0)
+scale_min = 1.5
+scale_max = 1.5
+color_ramp = SubResource("GradientTexture1D_uiv75")
 
 [node name="UI" type="Control" unique_id=1492345889]
 layout_mode = 3
@@ -418,6 +438,12 @@ text = "+20 DE CURA"
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Button" unique_id=1755922100]
+position = Vector2(329, -67.5)
+amount = 30
+lifetime = 3.0
+process_material = SubResource("ParticleProcessMaterial_svhir")
+
 [node name="Button2" type="Button" parent="." unique_id=398185007]
 material = SubResource("ShaderMaterial_ebum8")
 layout_mode = 1
@@ -455,6 +481,12 @@ text = "DASH +5% DE DURAÇÃO"
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Button2" unique_id=1362177965]
+position = Vector2(329, 132.5)
+amount = 30
+lifetime = 3.0
+process_material = SubResource("ParticleProcessMaterial_svhir")
+
 [node name="Button3" type="Button" parent="." unique_id=2135350571]
 material = SubResource("ShaderMaterial_ebum8")
 layout_mode = 1
@@ -491,6 +523,40 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_vvong")
 text = "+5% DE DANO"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Button3" unique_id=1556635928]
+position = Vector2(329, 32.5)
+amount = 30
+lifetime = 3.0
+process_material = SubResource("ParticleProcessMaterial_svhir")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1518009688]
+stream = ExtResource("6_0el84")
+
+[node name="VirtualJoystick" type="VirtualJoystick" parent="." unique_id=1167121665]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 250.0
+offset_right = 98.0
+offset_bottom = 290.0
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="." unique_id=956761540]
+position = Vector2(470, 240)
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("7_ne00o")
+action = "ui_accept"
+
+[node name="TouchScreenButton2" type="TouchScreenButton" parent="." unique_id=1425442152]
+position = Vector2(550, 200)
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("7_ne00o")
+action = "Ataque"
+
+[node name="TouchScreenButton3" type="TouchScreenButton" parent="." unique_id=1084724811]
+position = Vector2(550, 200)
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("7_ne00o")
+action = "Dash"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

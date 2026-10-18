@@ -2,16 +2,8 @@
 shader_type canvas_item;
 render_mode unshaded;
 
-// ========================================
-// CONTROLES DA TRANSIÇÃO
-// ========================================
-
 uniform float progress : hint_range(0.0, 1.0) = 0.0;
 uniform float pulse : hint_range(0.0, 1.0) = 0.0;
-
-// ========================================
-// CORES: SOMENTE AZUL E PRETO
-// ========================================
 
 uniform vec4 core_color : source_color =
     vec4(0.25, 0.72, 1.0, 1.0);
@@ -25,10 +17,6 @@ uniform vec4 deep_blue : source_color =
 uniform vec4 fade_color : source_color =
     vec4(0.0, 0.005, 0.025, 1.0);
 
-// ========================================
-// CONFIGURAÇÕES
-// ========================================
-
 uniform vec2 reference_resolution = vec2(1280.0, 720.0);
 
 uniform float pixel_size : hint_range(1.0, 16.0, 1.0) = 5.0;
@@ -38,11 +26,6 @@ uniform float ring_width : hint_range(0.002, 0.05) = 0.010;
 uniform float glow_strength : hint_range(0.0, 2.0) = 0.75;
 
 uniform float detail_strength : hint_range(0.0, 2.0) = 1.0;
-
-
-// ========================================
-// FUNÇÕES
-// ========================================
 
 float hash21(vec2 p) {
     p = fract(p * vec2(123.34, 456.21));
@@ -58,14 +41,8 @@ float ring_mask(float dist, float radius, float width) {
     );
 }
 
-
-// ========================================
-// FRAGMENT
-// ========================================
-
 void fragment() {
 
-    // Pixelização real do desenho.
     vec2 grid = max(
         floor(reference_resolution / pixel_size),
         vec2(1.0)
@@ -81,43 +58,28 @@ void fragment() {
     float dist = length(p);
     float angle = atan(p.y, p.x);
 
-    // ====================================
-    // MOVIMENTO DO ANEL
-    // ====================================
+float radius = pulse * 1.35;
 
-    float radius = pulse * 1.35;
-
-    // Ondulação discreta, mantendo
-    // a silhueta circular.
     float distortion =
         sin(angle * 12.0 + TIME * 1.7) * 0.004 +
         sin(angle * 24.0 - TIME * 1.1) * 0.002;
 
     float d = dist + distortion;
 
-    // ====================================
-    // CAMADAS CONCÊNTRICAS
-    // ====================================
-
-    // Anel principal.
-    float main_ring = ring_mask(
+float main_ring = ring_mask(
         d, radius, ring_width
     );
 
-    // Anel interno.
     float inner_ring = ring_mask(
         d, max(radius - 0.035, 0.0),
         ring_width * 0.55
     );
 
-    // Anel externo.
     float outer_ring = ring_mask(
         d, radius + 0.030,
         ring_width * 0.45
     );
 
-    // Evita excesso de detalhes
-    // quando o pulso está começando.
     float expanded = smoothstep(
         0.04, 0.20, pulse
     );
@@ -125,11 +87,7 @@ void fragment() {
     inner_ring *= expanded;
     outer_ring *= expanded;
 
-    // ====================================
-    // SEGMENTOS DO ANEL
-    // ====================================
-
-    float segment_id = floor(
+float segment_id = floor(
         (angle + 3.14159265) / 6.2831853 * 48.0
     );
 
@@ -137,18 +95,13 @@ void fragment() {
         vec2(segment_id, 8.0)
     );
 
-    // Algumas interrupções na camada externa.
     float segment_mask = step(
         0.22, segment_noise
     );
 
     outer_ring *= segment_mask;
 
-    // ====================================
-    // RUNAS GEOMÉTRICAS PIXELADAS
-    // ====================================
-
-    float rune_sector = floor(
+float rune_sector = floor(
         (angle + 3.14159265) / 6.2831853 * 16.0
     );
 
@@ -178,11 +131,7 @@ void fragment() {
         rune_visibility *
         expanded;
 
-    // ====================================
-    // FRAGMENTOS AO REDOR DO ANEL
-    // ====================================
-
-    vec2 particle_cell = floor(
+vec2 particle_cell = floor(
         uv * vec2(110.0, 62.0)
     );
 
@@ -204,11 +153,7 @@ void fragment() {
     fragments *= fragment_band;
     fragments *= expanded;
 
-    // ====================================
-    // BRILHO DO ANEL
-    // ====================================
-
-    float glow = 1.0 - smoothstep(
+float glow = 1.0 - smoothstep(
         ring_width,
         ring_width * 9.0,
         abs(d - radius)
@@ -216,11 +161,7 @@ void fragment() {
 
     glow *= glow_strength;
 
-    // ====================================
-    // COMPOSIÇÃO AZUL
-    // ====================================
-
-    vec3 color = fade_color.rgb;
+vec3 color = fade_color.rgb;
 
     color += deep_blue.rgb *
         outer_ring * 1.8;
@@ -240,11 +181,7 @@ void fragment() {
     color += bright_blue.rgb *
         glow * 0.55;
 
-    // ====================================
-    // FADE PRETO PIXELADO
-    // ====================================
-
-    vec2 fade_cell = floor(
+vec2 fade_cell = floor(
         uv * vec2(100.0, 56.0)
     );
 
@@ -264,7 +201,6 @@ void fragment() {
         smoothstep(0.88, 1.0, progress)
     );
 
-    // Oculta o anel no preto completo.
     float visibility = 1.0 -
         smoothstep(0.88, 1.0, progress);
 

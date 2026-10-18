@@ -2,37 +2,21 @@
 shader_type canvas_item;
 render_mode unshaded;
 
-// ========================================
-// CORES DO CORAÇÃO
-// ========================================
-
 uniform vec4 azul_sombra : source_color = vec4(0.005, 0.045, 0.14, 1.0);
 uniform vec4 azul_musculo : source_color = vec4(0.025, 0.24, 0.60, 1.0);
 uniform vec4 azul_luz : source_color = vec4(0.13, 0.60, 0.96, 1.0);
 uniform vec4 azul_veias : source_color = vec4(0.01, 0.09, 0.28, 1.0);
-
-// ========================================
-// CONFIGURAÇÕES DO CORAÇÃO
-// ========================================
 
 uniform float tamanho : hint_range(0.3, 2.5) = 1.0;
 uniform float resolucao_pixel : hint_range(80.0, 640.0) = 260.0;
 uniform float velocidade_batimento : hint_range(0.0, 4.0) = 1.1;
 uniform float forca_batimento : hint_range(0.0, 0.15) = 0.035;
 
-// ========================================
-// CONFIGURAÇÕES DA NÉVOA
-// ========================================
-
 uniform vec4 cor_nevoa : source_color = vec4(0.55, 0.57, 0.62, 1.0);
 
 uniform float opacidade_nevoa : hint_range(0.0, 1.0) = 0.05;
 uniform float velocidade_nevoa : hint_range(0.0, 2.0) = 0.18;
 uniform float densidade_nevoa : hint_range(0.1, 3.0) = 0.5;
-
-// ========================================
-// FUNÇÕES GEOMÉTRICAS
-// ========================================
 
 float ellipse_sdf(vec2 p, vec2 c, vec2 r) {
     return (length((p - c) / r) - 1.0) * min(r.x, r.y);
@@ -45,52 +29,39 @@ float capsule_sdf(vec2 p, vec2 a, vec2 b, float r) {
     return length(q - v * h) - r;
 }
 
-// ========================================
-// FORMATO ANATÔMICO DO CORAÇÃO
-// ========================================
-
 float heart_shape(vec2 p) {
-    // Corpo principal volumoso
     float d = ellipse_sdf(
         p, vec2(-0.025, 0.065), vec2(0.345, 0.310)
     );
 
-    // Ventrículo esquerdo
     d = min(d, ellipse_sdf(
         p, vec2(0.095, 0.180), vec2(0.250, 0.285)
     ));
 
-    // Ventrículo direito
     d = min(d, ellipse_sdf(
         p, vec2(-0.170, 0.090), vec2(0.205, 0.245)
     ));
 
-    // Região inferior
     d = min(d, ellipse_sdf(
         p, vec2(0.035, 0.260), vec2(0.235, 0.195)
     ));
 
-    // Ponta anatômica
     d = min(d, capsule_sdf(
         p, vec2(0.015, 0.275), vec2(0.115, 0.425), 0.100
     ));
 
-    // Átrio esquerdo
     d = min(d, ellipse_sdf(
         p, vec2(-0.180, -0.155), vec2(0.145, 0.150)
     ));
 
-    // Átrio direito
     d = min(d, ellipse_sdf(
         p, vec2(0.155, -0.130), vec2(0.145, 0.155)
     ));
 
-    // Aorta ascendente
     d = min(d, capsule_sdf(
         p, vec2(0.035, -0.170), vec2(0.055, -0.390), 0.060
     ));
 
-    // Arco da aorta
     d = min(d, capsule_sdf(
         p, vec2(0.055, -0.390), vec2(-0.025, -0.465), 0.055
     ));
@@ -99,7 +70,6 @@ float heart_shape(vec2 p) {
         p, vec2(-0.025, -0.465), vec2(-0.125, -0.405), 0.049
     ));
 
-    // Ramos da aorta
     d = min(d, capsule_sdf(
         p, vec2(-0.010, -0.450), vec2(-0.015, -0.555), 0.023
     ));
@@ -108,7 +78,6 @@ float heart_shape(vec2 p) {
         p, vec2(0.055, -0.430), vec2(0.085, -0.530), 0.023
     ));
 
-    // Artéria pulmonar
     d = min(d, capsule_sdf(
         p, vec2(-0.080, -0.180), vec2(-0.110, -0.350), 0.055
     ));
@@ -117,22 +86,16 @@ float heart_shape(vec2 p) {
         p, vec2(-0.110, -0.350), vec2(-0.300, -0.390), 0.038
     ));
 
-    // Veia cava
     d = min(d, capsule_sdf(
         p, vec2(-0.190, -0.160), vec2(-0.220, -0.400), 0.042
     ));
 
-    // Vasos laterais
     d = min(d, capsule_sdf(
         p, vec2(0.170, -0.120), vec2(0.300, -0.220), 0.032
     ));
 
     return d;
 }
-
-// ========================================
-// RUÍDO PARA A NÉVOA
-// ========================================
 
 float noise_nevoa(vec2 p) {
     vec2 i = floor(p);
@@ -161,12 +124,7 @@ float fbm_nevoa(vec2 p) {
     return valor;
 }
 
-// ========================================
-// FRAGMENT
-// ========================================
-
 void fragment() {
-    // Pixelização
     vec2 tela = 1.0 / SCREEN_PIXEL_SIZE;
 
     vec2 grade = vec2(
@@ -180,11 +138,7 @@ void fragment() {
     p.x *= tela.x / tela.y;
     p *= 2.0;
 
-    // ====================================
-    // BATIMENTO CARDÍACO
-    // ====================================
-
-    float fase = fract(TIME * velocidade_batimento);
+float fase = fract(TIME * velocidade_batimento);
 
     float batida1 = exp(-pow((fase - 0.12) * 18.0, 2.0));
     float batida2 = exp(-pow((fase - 0.29) * 25.0, 2.0));
@@ -193,7 +147,6 @@ void fragment() {
 
     p /= tamanho * (1.0 + pulso * forca_batimento);
 
-    // Inclinação anatômica
     float ang = -0.12;
 
     mat2 rot = mat2(
@@ -203,14 +156,9 @@ void fragment() {
 
     p = rot * p;
 
-    // ====================================
-    // DESENHO DO CORAÇÃO
-    // ====================================
-
-    float d = heart_shape(p);
+float d = heart_shape(p);
     float mascara = 1.0 - step(0.0, d);
 
-    // Volume e iluminação
     float luz = clamp(
         0.52 - p.x * 0.85 - p.y * 0.35,
         0.0, 1.0
@@ -222,7 +170,6 @@ void fragment() {
         0.35 + luz * 0.65
     );
 
-    // Reflexo lateral
     float reflexo = ellipse_sdf(
         p, vec2(-0.12, -0.015), vec2(0.105, 0.20)
     );
@@ -237,14 +184,12 @@ void fragment() {
         reflexo_mask * 0.34
     );
 
-    // Textura muscular
     float textura = sin(
         p.y * 95.0 + sin(p.x * 31.0) * 2.0
     );
 
     cor *= 0.93 + 0.07 * textura;
 
-    // Sulco interventricular
     float sulco = capsule_sdf(
         p, vec2(-0.005, -0.075),
         vec2(0.09, 0.34), 0.012
@@ -256,7 +201,6 @@ void fragment() {
         (1.0 - step(0.0, sulco)) * 0.85
     );
 
-    // Veias coronárias
     float veia1 = capsule_sdf(
         p, vec2(0.025, 0.07),
         vec2(-0.16, 0.17), 0.009
@@ -280,7 +224,6 @@ void fragment() {
         (1.0 - step(0.0, veias)) * 0.75
     );
 
-    // Brilho na aorta
     float aorta_luz = capsule_sdf(
         p, vec2(0.015, -0.20),
         vec2(0.028, -0.37), 0.012
@@ -292,52 +235,35 @@ void fragment() {
         (1.0 - step(0.0, aorta_luz)) * 0.45
     );
 
-    // Sombras nas bordas
     float borda = 1.0 - smoothstep(
         -0.055, -0.005, d
     );
 
     cor *= mix(0.65, 1.0, borda);
 
-    // Quantização de cores
     cor = floor(cor * 32.0 + 0.5) / 32.0;
 
-    // ====================================
-    // FUNDO PRETO + CORAÇÃO
-    // ====================================
+vec3 cor_final = cor * mascara;
 
-    vec3 cor_final = cor * mascara;
-
-    // ====================================
-    // NÉVOA CINZA EM MOVIMENTO
-    // ====================================
-
-    // Camada 1: para a esquerda
-    float nevoa_esquerda = fbm_nevoa(
+float nevoa_esquerda = fbm_nevoa(
         uv * vec2(3.0, 4.0) * densidade_nevoa
         + vec2(TIME * velocidade_nevoa, 0.0)
     );
 
-    // Camada 2: para a direita
     float nevoa_direita = fbm_nevoa(
         uv * vec2(5.0, 3.0) * densidade_nevoa
         + vec2(-TIME * velocidade_nevoa * 0.65, 0.5)
     );
 
-    // Mistura das camadas
     float nevoa = nevoa_esquerda * 0.6
                 + nevoa_direita * 0.4;
 
-    // Formato das nuvens
     nevoa = smoothstep(0.25, 0.65, nevoa);
 
-    // Pixelização da névoa
     nevoa = floor(nevoa * 8.0 + 0.5) / 8.0;
 
-    // Opacidade máxima de 50%
     float alpha_nevoa = nevoa * opacidade_nevoa;
 
-    // Névoa passando na frente do coração
     cor_final = mix(
         cor_final,
         cor_nevoa.rgb,

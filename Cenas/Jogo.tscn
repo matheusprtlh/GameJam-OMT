@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://l2ugbcwomr8d" path="res://Assets/Parallax/Layer_0003_6.png" id="6_nlxp7"]
 [ext_resource type="PackedScene" uid="uid://bkfupja1ky6g6" path="res://Chunks/chunk1-6.tscn" id="7_4wtgg"]
 [ext_resource type="Texture2D" uid="uid://d08elmjvojoj6" path="res://Assets/Parallax/Layer_0002_7.png" id="7_g4kj3"]
+[ext_resource type="PackedScene" uid="uid://d4di3nly4e2bp" path="res://Chunks/chunk1-8.tscn" id="8_2xg7b"]
 [ext_resource type="Texture2D" uid="uid://beqn1s4s4gbt3" path="res://Assets/Parallax/Layer_0001_8.png" id="8_3m8v0"]
 [ext_resource type="Texture2D" uid="uid://d3ar8fhm5jrg2" path="res://Assets/Parallax/Layer_0000_9.png" id="9_nkcmr"]
 [ext_resource type="PackedScene" uid="uid://dqxmwyimlxhtl" path="res://Objetos/UI/ui.tscn" id="13_jluxk"]
@@ -22,7 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://bmm1a5288eoqn" path="res://Objetos/Game/arbusto.tscn" id="16_ip0tw"]
 [ext_resource type="Script" uid="uid://byx270fiqwjs4" path="res://pause.gd" id="18_rk8jn"]
 [ext_resource type="FontFile" uid="uid://cnulhtm6ago02" path="res://Fontes/Cinzel-VariableFont_wght.ttf" id="19_sg4pm"]
-[ext_resource type="Script" uid="uid://c4rv05cflgxnc" path="res://Cenas/label_2.gd" id="20_to7s4"]
+[ext_resource type="Script" uid="uid://c4rv05cflgxnc" path="res://Scripts/UI/label_2.gd" id="20_to7s4"]
 [ext_resource type="FontFile" uid="uid://c1q4p04d38y7f" path="res://Fontes/Rocketron.otf" id="21_cb73q"]
 [ext_resource type="Script" uid="uid://bl3jyay7yo5ld" path="res://resume.gd" id="22_4wtgg"]
 [ext_resource type="Script" uid="uid://dfpyvtklcspaf" path="res://menubutton.gd" id="23_2xg7b"]
@@ -49,7 +50,7 @@ color_ramp = SubResource("GradientTexture1D_kdsmm")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ebum8"]
 shader = ExtResource("24_sg4pm")
 shader_parameter/shadow_color = Color(0, 0, 0, 1)
-shader_parameter/outer_radius = 1.5000000712500001
+shader_parameter/outer_radius = 1.50000007125
 shader_parameter/inner_radius = 0.3
 shader_parameter/softness = 0.5
 shader_parameter/horizontal_only = false
@@ -65,8 +66,7 @@ normal = Vector2(1, 0)
 
 [node name="Node2D" type="Node2D" unique_id=536883192]
 script = ExtResource("1_llca2")
-chunk_scenes = Array[PackedScene]([ExtResource("2_nlxp7"), ExtResource("3_g4kj3"), ExtResource("4_rk8jn"), ExtResource("5_to7s4"), ExtResource("6_cb73q"), ExtResource("7_4wtgg")])
-grid_width = 1
+chunk_scenes = Array[PackedScene]([ExtResource("2_nlxp7"), ExtResource("3_g4kj3"), ExtResource("4_rk8jn"), ExtResource("5_to7s4"), ExtResource("6_cb73q"), ExtResource("7_4wtgg"), ExtResource("8_2xg7b")])
 chunk_size_in_pixels = Vector2(640, 360)
 enemy_scenes = Array[PackedScene]([ExtResource("14_v2w3s")])
 
@@ -96,6 +96,7 @@ amount = 100
 process_material = SubResource("ParticleProcessMaterial_ebum8")
 
 [node name="Parallax2D4" type="Parallax2D" parent="Parallax" unique_id=1781694974]
+self_modulate = Color(4.415934, 4.415934, 4.415934, 1)
 scroll_scale = Vector2(0.15, 1)
 scroll_offset = Vector2(-758, -23)
 repeat_size = Vector2(928, 0)
@@ -121,6 +122,12 @@ repeat_times = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax/Parallax2D6" unique_id=1458764198]
 texture = ExtResource("5_ip0tw")
+
+[node name="ColorRect" type="ColorRect" parent="Parallax/Parallax2D6" unique_id=193423857]
+offset_top = 332.0
+offset_right = 930.0
+offset_bottom = 432.0
+color = Color(0, 0, 0, 1)
 
 [node name="Parallax2D7" type="Parallax2D" parent="Parallax" unique_id=1257289712]
 scroll_scale = Vector2(0.3, 1)
@@ -171,6 +178,7 @@ texture = ExtResource("9_nkcmr")
 
 [node name="Player" parent="." unique_id=815027710 instance=ExtResource("2_irv42")]
 position = Vector2(170, 49)
+void_y = 400.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=103654509]
 
@@ -188,6 +196,7 @@ mouse_filter = 2
 
 [node name="Pause2" type="Control" parent="CanvasLayer" unique_id=67777340]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -294,6 +303,24 @@ position = Vector2(133, 271)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=283462058]
 shape = SubResource("WorldBoundaryShape2D_ebum8")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=889247824]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 3198.0
+offset_top = -200.0
+offset_right = 3274.0
+offset_bottom = 600.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(0, 400)
+color = Color(0, 18.892157, 18.892157, 1)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=432776097]
+color = Color(0.58913, 0.7225615, 0.9968701, 1)
 
 [connection signal="pressed" from="CanvasLayer/Pause2/RichTextLabel/Resume" to="CanvasLayer/Pause2" method="_on_resume_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause2/RichTextLabel2/Menu" to="CanvasLayer/Pause2" method="_on_menu_pressed"]

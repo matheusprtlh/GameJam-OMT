@@ -1,25 +1,11 @@
 shader_type canvas_item;
 render_mode unshaded;
 
-// =========================================================================
-//  Floresta bioluminescente - versao otimizada
-//  Mesmo visual, bem menos trabalho por pixel:
-//   - Particulas: celula vazia sai cedo (nao paga hash de posicao, senos
-//     de brilho nem pulso de grupo)
-//   - Cipos e plantas laterais: curva analitica no lugar de dezenas de
-//     segmentos por pixel; so as 3 folhas mais proximas sao testadas
-//   - Vagalumes reutilizam a formula exata das folhas (pousam de verdade)
-//  Todos os uniforms mantem os mesmos nomes e valores padrao:
-//  e substituicao direta (drop-in) do shader anterior.
-// =========================================================================
-
-// ----- cores -----
 uniform vec4 background_color : source_color = vec4(0.012, 0.025, 0.065, 1.0);
 uniform vec4 cyan_color : source_color = vec4(0.12, 1.0, 0.78, 1.0);
 uniform vec4 anomaly_color : source_color = vec4(1.0, 0.12, 0.55, 1.0);
 uniform vec2 reference_resolution = vec2(1280.0, 720.0);
 
-// ----- particulas -----
 group_uniforms Particles;
 uniform float particle_amount : hint_range(0.0, 100.0, 1.0) = 43.0;
 uniform float particle_density : hint_range(2.0, 150.0, 1.0) = 70.0;
@@ -34,7 +20,6 @@ uniform float pulse_strength : hint_range(0.0, 1.0, 0.01) = 0.65;
 uniform float pulse_scale : hint_range(0.1, 20.0, 0.1) = 4.0;
 group_uniforms;
 
-// ----- particulas roxas da corrupcao -----
 group_uniforms Purple_Particles;
 uniform bool enable_purple_particles = true;
 uniform vec4 purple_particle_color : source_color = vec4(0.65, 0.25, 1.0, 1.0);
@@ -45,7 +30,6 @@ uniform float purple_brightness : hint_range(0.0, 3.0, 0.05) = 0.65;
 uniform float purple_pixel_size : hint_range(1.0, 8.0, 1.0) = 2.0;
 group_uniforms;
 
-// ----- raios de luz -----
 group_uniforms Blue_Light_Rays;
 uniform bool enable_rays = true;
 uniform int ray_amount : hint_range(0, 30, 1) = 12;
@@ -57,12 +41,10 @@ uniform float ray_pixel_size : hint_range(1.0, 16.0, 1.0) = 6.0;
 uniform vec4 ray_color : source_color = vec4(0.05, 0.55, 1.0, 1.0);
 group_uniforms;
 
-// ----- anomalias -----
 group_uniforms Anomalies;
 uniform float anomaly_strength : hint_range(0.0, 1.0, 0.01) = 0.18;
 group_uniforms;
 
-// ----- plantas bioluminescentes -----
 group_uniforms Magical_Plants;
 uniform bool enable_plants = true;
 uniform int vine_count : hint_range(0, 12, 1) = 7;
@@ -80,7 +62,6 @@ uniform vec4 plant_light : source_color = vec4(0.035, 0.24, 0.20, 1.0);
 uniform vec4 plant_bioluminescence : source_color = vec4(0.15, 0.65, 0.50, 1.0);
 group_uniforms;
 
-// ----- vagalumes -----
 group_uniforms Fireflies;
 uniform bool enable_fireflies = true;
 uniform int firefly_count : hint_range(0, 40, 1) = 22;
@@ -91,17 +72,12 @@ uniform float firefly_flight_range : hint_range(0.02, 0.35, 0.01) = 0.13;
 uniform vec4 firefly_color : source_color = vec4(0.72, 1.0, 0.35, 1.0);
 group_uniforms;
 
-// =========================================================================
-//  UTILITARIOS
-// =========================================================================
-
 float hash21(vec2 p) {
     p = fract(p * vec2(123.34, 456.21));
     p += dot(p, p + 45.32);
     return fract(p.x * p.y);
 }
 
-// ruido suave (usado pelas anomalias)
 float noise2d(vec2 p) {
     vec2 i = floor(p);
     vec2 f = fract(p);
@@ -110,7 +86,6 @@ float noise2d(vec2 p) {
                mix(hash21(i + vec2(0.0, 1.0)), hash21(i + vec2(1.0, 1.0)), u.x), u.y);
 }
 
-// folha em losango
 float leaf_mask(vec2 p, vec2 c, vec2 dir, float size) {
     dir = normalize(dir);
     vec2 d = p - c;
@@ -118,12 +93,6 @@ float leaf_mask(vec2 p, vec2 c, vec2 dir, float size) {
         abs(dot(d, dir)) / max(size, 0.0001) +
         abs(dot(d, vec2(-dir.y, dir.x))) / max(size * 0.55, 0.0001));
 }
-
-// =========================================================================
-//  PARTICULAS
-//  Celula vazia (sorteio abaixo do threshold) sai cedo: nao paga hash de
-//  posicao, senos de brilho nem pulso de grupo.
-// =========================================================================
 
 vec3 particle_layer(vec2 uv, float t, float scale, float seed, float amp) {
     vec2 p = uv * scale;
@@ -153,7 +122,6 @@ vec3 particle_layer(vec2 uv, float t, float scale, float seed, float amp) {
     return acc;
 }
 
-// Particulas roxas independentes, em coordenadas UV locais.
 vec3 purple_particle_layer(vec2 uv) {
     if (!enable_purple_particles || purple_amount <= 0.0) {
         return vec3(0.0);
@@ -184,10 +152,6 @@ vec3 purple_particle_layer(vec2 uv) {
     return acc;
 }
 
-// =========================================================================
-//  RAIOS AZUIS
-// =========================================================================
-
 vec3 blue_light_rays(vec2 uv) {
     if (!enable_rays || ray_amount <= 0) { return vec3(0.0); }
     vec2 grid = max(floor(reference_resolution / max(ray_pixel_size, 1.0)), vec2(1.0));
@@ -210,13 +174,6 @@ vec3 blue_light_rays(vec2 uv) {
     return acc;
 }
 
-// =========================================================================
-//  PLANTAS
-//  Caules e galhos sao avaliados como curva analitica: o pixel consulta a
-//  curva na propria altura, em vez de testar dezenas de segmentos.
-// =========================================================================
-
-// ponto do caule do cipo i na profundidade t (0..1)
 vec2 vine_stem(int i, float r, float t) {
     float fi = float(i);
     float x = (fi + 0.5) / float(max(vine_count, 1)) + (r - 0.5) * 0.06
@@ -225,8 +182,6 @@ vec2 vine_stem(int i, float r, float t) {
     return vec2(x, t * vine_length * (0.65 + r * 0.5));
 }
 
-// centro (xy) e direcao (zw) da folha j do cipo i.
-// Os vagalumes usam a mesma formula: pousam nas folhas reais.
 vec4 vine_leaf(int i, float r, int j) {
     float fi = float(i);
     float t = float(j + 1) / 12.0;
@@ -250,11 +205,9 @@ vec4 draw_vines(vec2 uv) {
         if (t < 0.0 || t > 1.0) { continue; }
         vec2 sp = vine_stem(i, r, t);
         if (abs(uv.x - sp.x) > leaf_size * 3.0 + 0.02) { continue; }
-        // caule: curva quase vertical, distancia horizontal basta
         float stem = 1.0 - step(vine_thickness, abs(uv.x - sp.x));
         col = mix(col, mix(plant_dark.rgb, plant_light.rgb, r * 0.65), stem);
         a = max(a, stem);
-        // so as 3 folhas cuja altura esta mais proxima deste pixel
         int jn = int(floor(t * 12.0 + 0.5)) - 1;
         for (int l = -1; l <= 1; l++) {
             int j = jn + l;
@@ -264,7 +217,7 @@ vec4 draw_vines(vec2 uv) {
             float leaf = leaf_mask(uv, lf.xy, lf.zw, leaf_size * (0.8 + rj * 0.4));
             col = mix(col, mix(plant_dark.rgb, plant_light.rgb, 0.5 + rj * 0.5), leaf);
             a = max(a, leaf);
-            if (rj >= 0.55) {  // ponto bioluminescente pulsante
+            if (rj >= 0.55) {
                 float dotm = 1.0 - step(0.006,
                     max(abs(uv.x - lf.x), abs(uv.y - lf.y)));
                 float pulse = 0.5 + 0.5 * sin(TIME * 1.5 + fi * 2.0 + float(j));
@@ -277,7 +230,6 @@ vec4 draw_vines(vec2 uv) {
     return vec4(col, a);
 }
 
-// ponto do galho em t (0..1)
 vec2 branch_point(float fb, float ph, vec2 anchor, float Lb, float side, float t) {
     float sway = sin(TIME * wind_speed + fb * 1.8 + t * 2.2 + ph) * wind_strength * t;
     return anchor + vec2(side * Lb * t + sway, -Lb * (0.26 * t + 0.15 * t * t));
@@ -287,12 +239,11 @@ vec4 draw_side_plants(vec2 uv) {
     vec3 col = vec3(0.0);
     float a = 0.0;
     if (!enable_plants || !side_plants) { return vec4(col, a); }
-    float m = leaf_size * 2.0 + 0.02;  // margem de alcance das folhas
+    float m = leaf_size * 2.0 + 0.02;
     for (int s = 0; s < 2; s++) {
         float side = s == 0 ? 1.0 : -1.0;
         float edge = s == 0 ? 0.0 : 1.0;
         float ph = float(s) * 2.3;
-        // tronco continuo (antes: 16 segmentos)
         float tt = (1.04 - uv.y) / 0.85;
         if (tt >= 0.0 && tt <= 1.0) {
             float x = edge + side * (0.015 + 0.034 * tt)
@@ -309,10 +260,8 @@ vec4 draw_side_plants(vec2 uv) {
                 + side * sin(ta * 5.0 + TIME * wind_speed + ph) * wind_strength * ta,
                 1.04 - ta * 0.85);
             float rx = side * (uv.x - anchor.x);
-            // galho fora de alcance: pula galho e folhas
             if (rx < -m || rx > Lb + m
                 || uv.y > anchor.y + m || uv.y < anchor.y - 0.45 * Lb - m) { continue; }
-            // t aproximado pelo eixo x + 1 refinamento
             float t = clamp(rx / Lb, 0.0, 1.0);
             vec2 bp = branch_point(fb, ph, anchor, Lb, side, t);
             t = clamp(t + side * (uv.x - bp.x) / Lb, 0.0, 1.0);
@@ -321,7 +270,6 @@ vec4 draw_side_plants(vec2 uv) {
                 max(abs(uv.x - bp.x), abs(uv.y - bp.y)));
             col = mix(col, mix(plant_dark.rgb, plant_light.rgb, 0.65), stem);
             a = max(a, stem);
-            // so as 3 folhas mais proximas deste ponto do galho
             int sn = int(floor(t * 7.0 + 0.5));
             for (int l = -1; l <= 1; l++) {
                 int seg = sn + l;
@@ -337,7 +285,7 @@ vec4 draw_side_plants(vec2 uv) {
                     leaf_size * (0.8 + 0.18 * hash21(vec2(fb, fseg))));
                 col = mix(col, plant_light.rgb * 0.9, leaf);
                 a = max(a, leaf);
-                if (hash21(vec2(fb + 9.0, fseg + ph)) >= 0.70) {  // brilho pontual
+                if (hash21(vec2(fb + 9.0, fseg + ph)) >= 0.70) {
                     float dotm = 1.0 - step(0.0027,
                         max(abs(uv.x - lc.x), abs(uv.y - lc.y)));
                     float pulse = 0.70 + 0.30 * sin(TIME * 2.1 + fb + fseg);
@@ -349,12 +297,6 @@ vec4 draw_side_plants(vec2 uv) {
     }
     return vec4(col, a);
 }
-
-// =========================================================================
-//  VAGALUMES
-//  Reutilizam vine_leaf: cada vaga-lume pousa exatamente numa folha que
-//  existe na tela, sob o mesmo vento.
-// =========================================================================
 
 vec3 draw_fireflies(vec2 uv, vec2 res) {
     if (!enable_fireflies || !enable_plants || vine_count <= 0 || firefly_count <= 0) {
@@ -371,7 +313,6 @@ vec3 draw_fireflies(vec2 uv, vec2 res) {
         int vi = int(floor(r1 * float(vine_count)));
         float rv = hash21(vec2(float(vi), 4.2));
         vec2 target = vine_leaf(vi, rv, 1 + int(floor(r2 * 10.0))).xy;
-        // ciclo proprio: voo -> pouso -> descanso -> partida
         float phase = fract(TIME / (firefly_cycle * (0.78 + r3 * 0.5))
             + r1 * 0.91 + r2 * 0.37);
         vec2 away = vec2(r2 < 0.5 ? -1.0 : 1.0, -0.55 - r3 * 0.55)
@@ -381,7 +322,7 @@ vec3 draw_fireflies(vec2 uv, vec2 res) {
         float flying = (1.0 - land) + leave;
         vec2 pos = target + away * flying
             + vec2(sin(TIME * 4.2 + fi * 2.7), cos(TIME * 3.1 + fi * 1.9)) * 0.008 * flying;
-        pos.y -= 0.0025;  // pousa logo acima da folha
+        pos.y -= 0.0025;
         vec2 d = abs((puv - pos) * res);
         if (max(d.x, d.y) > firefly_size + 1.0) { continue; }
         float visible = smoothstep(0.0, 0.09, phase)
@@ -393,37 +334,27 @@ vec3 draw_fireflies(vec2 uv, vec2 res) {
     return acc;
 }
 
-// =========================================================================
-//  FRAGMENT
-// =========================================================================
-
 void fragment() {
     vec2 res = max(reference_resolution, vec2(1.0));
     vec2 grid = max(floor(res / max(pixel_size, 1.0)), vec2(1.0));
     vec2 uv = (floor(UV * grid) + 0.5) / grid;
     float t = TIME * speed;
 
-    // fundo escuro com leve gradiente
     vec3 color = background_color.rgb + vec3(0.0, 0.035, 0.055) * (1.0 - uv.y);
 
-    // particulas: duas camadas de profundidade
     color += particle_layer(uv, t * 0.45, particle_density * 0.65, 1.0, 0.35)
         * glow_strength;
     color += particle_layer(uv, t * 0.8, particle_density, 5.0, 0.7) * glow_strength;
 
-    // particulas roxas da corrupcao
     color += purple_particle_layer(UV);
 
-    // raios de luz
     color += blue_light_rays(uv);
 
-    // anomalias
     float event = 1.0 - smoothstep(0.0, 0.35, abs(mod(TIME, 17.0) - 14.0));
     float distortion = noise2d(uv * 15.0 + vec2(t * 2.0, 0.0));
     color += anomaly_color.rgb
         * (event * smoothstep(0.65, 0.9, distortion) * anomaly_strength);
 
-    // plantas (grade de pixels propria)
     vec2 pgrid = max(floor(res / max(plant_pixel_size, 1.0)), vec2(1.0));
     vec2 puv = (floor(UV * pgrid) + 0.5) / pgrid;
     vec4 vines = draw_vines(puv);
@@ -431,10 +362,8 @@ void fragment() {
     vec4 sides = draw_side_plants(puv);
     color = mix(color, sides.rgb, sides.a);
 
-    // vagalumes por cima das folhas
     color += draw_fireflies(UV, res);
 
-    // vinheta
     vec2 c = uv * 2.0 - 1.0;
     color *= clamp(1.0 - 0.35 * dot(c, c), 0.45, 1.0);
     COLOR = vec4(color, 1.0);

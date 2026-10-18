@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://hgmqe5slbuug"]
+
+[ext_resource type="Texture2D" uid="uid://bba6up3rcjqkl" path="res://Assets/Game/Flor Sprite 1.png" id="1_u6ohq"]
+[ext_resource type="Texture2D" uid="uid://d0rf2efslo4nw" path="res://Assets/Game/Flor Sprite 2.png" id="2_4yd1k"]
+[ext_resource type="Texture2D" uid="uid://bfd4rfrctfdy" path="res://Assets/Game/Flor Sprite 3.png" id="3_v0f33"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mr7wj"]
+texture = ExtResource("1_u6ohq")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pfap5"]
+texture = ExtResource("2_4yd1k")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k32xn"]
+texture = ExtResource("3_v0f33")
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ebum8"]
+sources/1 = SubResource("TileSetAtlasSource_mr7wj")
+sources/2 = SubResource("TileSetAtlasSource_pfap5")
+sources/3 = SubResource("TileSetAtlasSource_k32xn")
+
+[node name="TileMapLayer2" type="TileMapLayer" unique_id=1904171726]
+self_modulate = Color(1.353256, 1.353256, 1.353256, 1)
+scale = Vector2(1.5, 1.5)
+tile_set = SubResource("TileSet_ebum8")

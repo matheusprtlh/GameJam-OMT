@@ -1,7 +1,6 @@
 
 extends CharacterBody2D
 
-# Configurações de Knockback
 @export var force_knockback_normal: float = 300.0
 @export var force_knockback_forte: float = 600.0
 @export var force_launch_up: float = -500.0
@@ -11,7 +10,6 @@ extends CharacterBody2D
 
 @export var push_force: float = 2000.0
 
-# Configurações de perseguição
 @export var velocidade_perseguicao: float = 80.0
 @export var distancia_parada: float = 35.0
 @export var duracao_stun: float = 0.3
@@ -26,11 +24,9 @@ var player_alvo: CharacterBody2D = null
 var tempo_stun: float = 0.0
 var esta_morrendo: bool = false
 
-
 func _ready() -> void:
 	detection_area.body_entered.connect(_on_detection_body_entered)
 	detection_area.body_exited.connect(_on_detection_body_exited)
-
 
 func _physics_process(delta: float) -> void:
 	if esta_morrendo:
@@ -63,19 +59,19 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(
 			velocity.x, 0.0, atrito_knockback * delta
 		)
+	
+	if is_instance_valid(player_alvo):
+		$Sprite2D.flip_h = (player_alvo.global_position.x < global_position.x)
 
 	move_and_slide()
-
 
 func _on_detection_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player") and body is CharacterBody2D:
 		player_alvo = body
 
-
 func _on_detection_body_exited(body: Node2D) -> void:
 	if body == player_alvo:
 		player_alvo = null
-
 
 func levar_dano(
 	dano: int,
@@ -89,7 +85,6 @@ func levar_dano(
 	hit(dano)
 	if vida == 0:
 		esta_morrendo = true
-		# Evita colisões e novos ataques durante a remoção.
 		set_collision_layer(0)
 		set_collision_mask(0)
 		queue_free()
@@ -121,7 +116,6 @@ func levar_dano(
 			direcao_ataque, force_knockback_normal, "normal"
 		)
 
-
 func aplicar_knockback(
 	direcao: Vector2,
 	forca: float,
@@ -140,7 +134,6 @@ func aplicar_knockback(
 		velocity.y = -150.0 if empurrao.y == 0 else empurrao.y
 		velocity.x = empurrao.x
 
-
 func hit(num: int):
 	var label = $Label.duplicate()
 	label.text = str(num)
@@ -151,7 +144,6 @@ func hit(num: int):
 	label.get_node("AnimationPlayer").animation_finished.connect(
 		label.queue_free.unbind(1)
 	)
-
 
 func _on_push_body_entered(body: Node2D) -> void:
 	if not esta_morrendo and not SceneTransition.transitioning and body.is_in_group("Player"):

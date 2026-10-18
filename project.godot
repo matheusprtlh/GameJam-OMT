@@ -26,7 +26,6 @@ window/size/viewport_width=640
 window/size/viewport_height=360
 window/size/mode=3
 window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
 
 [file_customization]
 
@@ -44,6 +43,8 @@ folder_colors={
 
 Enemy=""
 Player=""
+HitBoxCoracao=""
+HitboxCoracao=""
 
 [input]
 
@@ -90,6 +91,10 @@ Dash={
 ]
 }
 
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
@@ -98,4 +103,9 @@ Dash={
 
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
+textures/vram_compression/import_etc2_astc=true
 viewport/hdr_2d=true
+# Android: renderer leve para caber em celulares de 6GB (RAM unificada).
+# Desktop continua Forward+/D3D12; o glow neon pode nao aparecer no celular.
+renderer/rendering_method.mobile="gl_compatibility"
+viewport/hdr_2d.mobile=false

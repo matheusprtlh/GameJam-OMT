@@ -10,11 +10,9 @@ void fragment() {
     float alpha = 0.0;
     
     if (horizontal_only) {
-        // Aplica a sombra apenas nas laterais (esquerda e direita)
         float dist = abs(UV.x - 0.5) * 2.0;
         alpha = smoothstep(inner_radius, outer_radius, dist);
     } else {
-        // Aplica a sombra circular/oval ao redor de toda a borda
         float dist = distance(UV, vec2(0.5));
         alpha = smoothstep(inner_radius * 0.5, outer_radius * 0.5, dist);
     }

@@ -24,7 +24,6 @@ func _process(delta: float) -> void:
 
 	var fade = posicao - float(indice)
 
-	# Transicao suave
 	fade = fade * fade * (3.0 - 2.0 * fade)
 
 	var cor_atual = cores[indice].lerp(
