@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cebotw7p02tl7"]
 
-[ext_resource type="Script" uid="uid://c5koon3jiau5l" path="res://enemy_2.gd" id="1_mvvu1"]
+[ext_resource type="Script" uid="uid://c5koon3jiau5l" path="res://Scripts/Game/enemy_2.gd" id="1_mvvu1"]
 [ext_resource type="Texture2D" uid="uid://drabtiqmrapk5" path="res://Assets/Cogumelo.png" id="2_mvvu1"]
 [ext_resource type="FontFile" uid="uid://c1q4p04d38y7f" path="res://Fontes/Rocketron.otf" id="3_qr8xe"]
 

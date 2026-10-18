@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b1moapdkoiwrw"]
 
-[ext_resource type="Script" uid="uid://dupmgwjnmtfcn" path="res://scene_transition.gd" id="1_script"]
-[ext_resource type="Shader" uid="uid://07dalm7jojcy" path="res://pulse.gdshader" id="2_shader"]
+[ext_resource type="Script" uid="uid://dupmgwjnmtfcn" path="res://Scripts/scene_transition.gd" id="1_script"]
+[ext_resource type="Shader" uid="uid://07dalm7jojcy" path="res://Shaders/pulse.gdshader" id="2_shader"]
 [ext_resource type="AudioStream" uid="uid://yijtosn0vwjs" path="res://Sons/Efeitos/transitionN.mp3" id="3_w1eit"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pulse"]

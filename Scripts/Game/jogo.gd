@@ -109,7 +109,7 @@ func generate_new_seed_and_restart() -> void:
 	Global.current_seed = 0
 
 	if Global.vitorias % 5 == 0:
-		get_tree().change_scene_to_file("res://caminho_heart.tscn")
+		get_tree().change_scene_to_file("res://Cenas/caminho_heart.tscn")
 	else:
 		SceneTransition.change_scene(scene_file_path)
 	

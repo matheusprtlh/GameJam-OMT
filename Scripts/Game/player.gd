@@ -391,5 +391,5 @@ func criar_poeira() -> void:
 	poeira.finished.connect(poeira.queue_free)
 
 func _on_tpsala_body_entered(body: Node2D) -> void:
-	get_tree().change_scene_to_file("res://sala_heart.tscn")
+	get_tree().change_scene_to_file("res://Cenas/sala_heart.tscn")
 	print("funcionou")
